@@ -4,7 +4,7 @@ My dotfiles
 Installation
 ------------
 
-First clone this repository:
+Clone this repository:
 
 ```$ git clone git@github.com:VerAx1/dotfiles.git```
 

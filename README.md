@@ -16,4 +16,4 @@ Run the install script
 
 ```$ sh make.sh ```
 
-The replaced dotfiles will be in a folder called 'dotfiles_old'
+The replaced dotfiles will be in a folder called ```dotfiles_old```

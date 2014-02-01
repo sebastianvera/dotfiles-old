@@ -53,8 +53,8 @@ set shiftwidth=2
 set smartcase
 set smarttab
 set showmatch
+set showcmd
 set smartindent
-"set tags=./tags;
 set ts=2
 set vb
 set bg=light
@@ -87,6 +87,11 @@ endfunction
 
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
+map <C-s> <esc>:w<CR>
+imap <C-s> <esc>:w<CR>
+map <C-t> <esc>:tabnew<CR>
+map <Leader>gac :Gcommit -m -a ""<LEFT>
+map <Leader>gc :Gcommit -m ""<LEFT>
 "
 " " Get off my lawn
 nnoremap <Left> :echoe "Use h"<CR>
@@ -95,9 +100,18 @@ nnoremap <Up> :echoe "Use k"<CR>
 nnoremap <Down> :echoe "Use j"<CR>
 
 " vim-rspec mappings
-nnoremap <Leader>t :call RunCurrentSpecFile()<CR>
+nnoremap <Leader>r :call RunCurrentSpecFile()<CR>
 nnoremap <Leader>s :call RunNearestSpec()<CR>
 nnoremap <Leader>l :call RunLastSpec()<CR>
-
+map <Leader>o :w<cr>:call RunCurrentLineInTest()<CR>
 nmap <Leader>bi :source ~/.vimrc<cr>:BundleInstall<cr>
+map <Leader>t :CommandT<CR>
 let g:rspec_command = "!zeus rspec {spec}"
+" Edit routes
+command! Rroutes :e config/routes.rb
+command! RTroutes :tabe config/routes.rb
+
+" (Hopefully) removes the delay when hitting esc in insert mode
+set noesckeys
+set ttimeout
+set ttimeoutlen=1

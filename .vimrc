@@ -13,6 +13,7 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'tpope/vim-bundler'
 Bundle 'tpope/vim-rvm'
+Bundle 'ervandew/supertab'
 Bundle 'wincent/Command-T'
 "Bundle 'croaky/vim-colors-github'
 Bundle 'vim-scripts/ctags.vim'
@@ -21,9 +22,12 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-rake'
 Bundle 'tpope/vim-endwise'
 Bundle 'tsaleh/vim-matchit'
-Bundle 'honza/vim-snippets'
+"Bundle 'honza/vim-snippets'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'thoughtbot/vim-rspec'
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "garbas/vim-snipmate"
 
 syntax on
 filetype plugin indent on
@@ -85,13 +89,26 @@ function! EchoTags()
   echo join(split(&tags, ","), "\n")
 endfunction
 
+command! Q q
+
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
+inoremap <Tab> <C-P>
 map <C-s> <esc>:w<CR>
 imap <C-s> <esc>:w<CR>
 map <C-t> <esc>:tabnew<CR>
 map <Leader>gac :Gcommit -m -a ""<LEFT>
 map <Leader>gc :Gcommit -m ""<LEFT>
+map <Leader>w <c-w>w
+set completeopt=longest,menu
+set complete=.,w,b,u,t
+set wildmode=longest,list:longest
+map <Leader>vi :tabe ~/.vimrc<CR>
+" Window navigation
+nmap <C-J> <C-W><C-J>
+nmap <C-K> <C-W><C-K>
+nmap <C-L> <C-W><C-L>
+nmap <C-H> <C-W><C-H>
 "
 " " Get off my lawn
 nnoremap <Left> :echoe "Use h"<CR>
@@ -100,13 +117,13 @@ nnoremap <Up> :echoe "Use k"<CR>
 nnoremap <Down> :echoe "Use j"<CR>
 
 " vim-rspec mappings
-nnoremap <Leader>r :call RunCurrentSpecFile()<CR>
-nnoremap <Leader>s :call RunNearestSpec()<CR>
-nnoremap <Leader>l :call RunLastSpec()<CR>
+nnoremap <Leader>r :w<cr>:call RunCurrentSpecFile()<CR>
+nnoremap <Leader>s :w<cr>:call RunNearestSpec()<CR>
+nnoremap <Leader>l :w<cr>:call RunLastSpec()<CR>
 map <Leader>o :w<cr>:call RunCurrentLineInTest()<CR>
 nmap <Leader>bi :source ~/.vimrc<cr>:BundleInstall<cr>
 map <Leader>t :CommandT<CR>
-let g:rspec_command = "!zeus rspec {spec}"
+let g:rspec_command = "!clear && zeus rspec {spec}"
 " Edit routes
 command! Rroutes :e config/routes.rb
 command! RTroutes :tabe config/routes.rb

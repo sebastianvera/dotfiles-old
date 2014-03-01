@@ -9,32 +9,34 @@ Bundle 'gmarik/vundle'
 
 " My bundles
 Bundle 'tpope/vim-rails'
+Bundle 'danro/rename.vim'
+Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-fugitive'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'tpope/vim-bundler'
 Bundle 'tpope/vim-rvm'
 Bundle 'ervandew/supertab'
 Bundle 'wincent/Command-T'
-"Bundle 'croaky/vim-colors-github'
 Bundle 'vim-scripts/ctags.vim'
 Bundle 'vim-scripts/tComment'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-rake'
 Bundle 'tpope/vim-endwise'
 Bundle 'tsaleh/vim-matchit'
-"Bundle 'honza/vim-snippets'
+Bundle 'ecomba/vim-ruby-refactoring'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'thoughtbot/vim-rspec'
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
-
+Bundle 'altercation/vim-colors-solarized'
 syntax on
 filetype plugin indent on
 
 let mapleader = ","
 set t_Co=256
 set autoindent
+set autoread
 set backspace=indent,eol,start
 set colorcolumn=80
 set et
@@ -61,7 +63,7 @@ set showcmd
 set smartindent
 set ts=2
 set vb
-set bg=light
+set bg=dark
 
 " (Hopefully) removes the delay when hitting esc in insert mode
 set noesckeys
@@ -76,6 +78,13 @@ highlight PmenuSel ctermfg=black
 
 " Color scheme
 colorscheme default 
+
+if has("gui_running")
+  colorscheme solarized
+
+  set guifont=Monaco:h14
+  set bg=dark
+endif
 "highlight NonText guibg=#060606
 "highlight Folded  guibg=#0A0A0A guifg=#9090D0
 
@@ -97,7 +106,7 @@ inoremap <Tab> <C-P>
 map <C-s> <esc>:w<CR>
 imap <C-s> <esc>:w<CR>
 map <C-t> <esc>:tabnew<CR>
-map <Leader>gac :Gcommit -m -a ""<LEFT>
+map <Leader>gac :Gcommit -am ""<LEFT>
 map <Leader>gc :Gcommit -m ""<LEFT>
 map <Leader>w <c-w>w
 set completeopt=longest,menu

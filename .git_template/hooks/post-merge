@@ -15,7 +15,7 @@ then
   # osascript -e 'display notification "'"$message"'" with title "'"$title"'" subtitle "'$app_name'"'
   # command -v notify-send >/dev/null 2>&1 && notify-send --icon=info "$title" "$message"
   # command -v growlnotify >/dev/null 2>&1 && growlnotify -n "$appname" -m "$message" -t "$title"
-  command -v terminal-notifier && terminal-notifier -title "🚨 $title" -message "$message" -subtitle "$app_name" -sound "default" 
+  command -v terminal-notifier > /dev/null && terminal-notifier -title "🚨 $title" -message "$message" -subtitle "$app_name" -sound "default" 
   # echo ""
   # echo "###################################"
   # echo "#  Changes in Gemfile detected!   #"
@@ -31,7 +31,7 @@ then
   # osascript -e 'display notification "'"$message"'" with title "'"$title"'" subtitle "'$app_name'"'
   # command -v notify-send >/dev/null 2>&1 && notify-send --icon=info "$title" "$message"
   # command -v growlnotify >/dev/null 2>&1 && growlnotify -n "$appname" -m "$message" -t "$title"
-  command -v terminal-notifier && terminal-notifier -title "🚨 $title" -message "$message" -subtitle "$app_name" -sound "default" 
+  command -v terminal-notifier > /dev/null && terminal-notifier -title "🚨 $title" -message "$message" -subtitle "$app_name" -sound "default" 
   # echo ""
   # echo "####################################"
   # echo "#     Migration file detected!     #"

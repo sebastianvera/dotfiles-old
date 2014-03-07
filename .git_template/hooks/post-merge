@@ -1,4 +1,4 @@
-#!tbin/sh
+#!/bin/sh
 .git/hooks/ctags >/dev/null 2>&1 &
 
 diff=`git diff --name-only HEAD@{1} HEAD`

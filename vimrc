@@ -30,6 +30,18 @@ Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'tpope/vim-repeat'
+Bundle 'digitaltoad/vim-jade'
+Bundle 'jelera/vim-javascript-syntax'
+Bundle 'othree/javascript-libraries-syntax.vim'
+Bundle "mattn/emmet-vim"
+Bundle 'moll/vim-node'
+Bundle 'cakebaker/scss-syntax.vim'
+Bundle 'bling/vim-airline'
+Bundle 'paranoida/vim-airlineish'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'scrooloose/nerdtree'
+
 syntax on
 filetype plugin indent on
 
@@ -82,7 +94,7 @@ colorscheme default
 if has("gui_running")
   colorscheme solarized
 
-  set guifont=Monaco:h14
+  set guifont=Monaco\ for\ Powerline:h14
   set bg=dark
 endif
 "highlight NonText guibg=#060606
@@ -102,6 +114,7 @@ command! Q q
 
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
+nmap <leader>k :NERDTreeToggle<cr>
 inoremap <Tab> <C-P>
 map <C-s> <esc>:w<CR>
 imap <C-s> <esc>:w<CR>
@@ -132,12 +145,26 @@ nnoremap <Leader>l :w<cr>:call RunLastSpec()<CR>
 map <Leader>o :w<cr>:call RunCurrentLineInTest()<CR>
 nmap <Leader>bi :source ~/.vimrc<cr>:BundleInstall<cr>
 map <Leader>t :CommandT<CR>
+map <Leader>f :call OpenFactoryFile()<CR>
+
 let g:rspec_command = "!clear && zeus rspec {spec}"
+let g:airline_theme = 'airlineish'
+let g:airline_powerline_fonts = 1
 " Edit routes
 command! Rroutes :e config/routes.rb
 command! RTroutes :tabe config/routes.rb
+command! RVroutes :vsp config/routes.rb
 
 " (Hopefully) removes the delay when hitting esc in insert mode
 set noesckeys
 set ttimeout
 set ttimeoutlen=1
+
+" Stolen from r00k vimrc file
+function! OpenFactoryFile()
+  if filereadable("test/factories.rb")
+    execute ":vsp test/factories.rb"
+  else
+    execute ":vsp spec/factories.rb"
+  end
+endfunction

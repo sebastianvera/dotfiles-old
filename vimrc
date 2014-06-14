@@ -1,49 +1,61 @@
 " ========================================================================
 " Vundle stuff
 " ========================================================================
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set nocompatible "Required by vundle
+filetype off     "Required by vundle
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " Let Vundle manage Vundle (required)!
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/Vundle.vim'
 
 " My bundles
-Bundle 'tpope/vim-rails'
-Bundle 'danro/rename.vim'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-fugitive'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'tpope/vim-bundler'
-Bundle 'tpope/vim-rvm'
-Bundle 'ervandew/supertab'
-Bundle 'wincent/Command-T'
-Bundle 'vim-scripts/ctags.vim'
-Bundle 'vim-scripts/tComment'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-rake'
-Bundle 'tpope/vim-endwise'
-Bundle 'tsaleh/vim-matchit'
-Bundle 'ecomba/vim-ruby-refactoring'
-Bundle 'tomtom/tcomment_vim'
-Bundle 'thoughtbot/vim-rspec'
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "garbas/vim-snipmate"
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'tpope/vim-repeat'
-Bundle 'digitaltoad/vim-jade'
-Bundle 'jelera/vim-javascript-syntax'
-Bundle 'othree/javascript-libraries-syntax.vim'
-Bundle "mattn/emmet-vim"
-Bundle 'moll/vim-node'
-Bundle 'cakebaker/scss-syntax.vim'
-Bundle 'bling/vim-airline'
-Bundle 'paranoida/vim-airlineish'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'scrooloose/nerdtree'
+Plugin 'danro/rename.vim'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-markdown'
+Plugin 'tpope/vim-bundler'
+Plugin 'tpope/vim-rvm'
+Plugin 'tpope/vim-rake'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'vim-scripts/ctags.vim'
+Plugin 'vim-scripts/matchit.zip'
+Plugin 'ervandew/supertab'
+Plugin 'wincent/Command-T'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'ecomba/vim-ruby-refactoring'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'thoughtbot/vim-rspec'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'digitaltoad/vim-jade'
+Plugin 'pangloss/vim-javascript'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'othree/javascript-libraries-syntax.vim'
+Plugin 'mattn/emmet-vim'
+Plugin 'moll/vim-node'
+Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'bling/vim-airline'
+Plugin 'paranoida/vim-airlineish'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'scrooloose/nerdtree'
+Plugin 'othree/html5.vim'
+Plugin 'pbrisbin/vim-mkdir'
+Plugin 'scrooloose/syntastic'
+" Needed for snipmate
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
 
+" All of your Plugins must be added before the following line
+call vundle#end() "required
+filetype plugin indent on "required
+" =====================================================
 syntax on
-filetype plugin indent on
+filetype plugin indent on "required
 
 let mapleader = ","
 set t_Co=256
@@ -53,7 +65,6 @@ set backspace=indent,eol,start
 set colorcolumn=80
 set et
 set encoding=utf-8
-set expandtab
 set fileencoding=utf-8
 set gdefault
 set hlsearch
@@ -61,13 +72,13 @@ set history=500
 set ignorecase
 set incsearch
 set laststatus=2
-set list
-set listchars=tab:▸\ ,eol:¬,nbsp:⋅,trail:⋅
-set nocompatible
 set nofoldenable
 set relativenumber
 set ruler
+set tabstop=2
 set shiftwidth=2
+set shiftround
+set expandtab
 set smartcase
 set smarttab
 set showmatch
@@ -82,6 +93,9 @@ set noesckeys
 set ttimeout
 set ttimeoutlen=1
 
+set timeoutlen=500
+
+
 " Highlight the status line
 highlight StatusLine ctermfg=blue ctermbg=yellow
 
@@ -90,15 +104,6 @@ highlight PmenuSel ctermfg=black
 
 " Color scheme
 colorscheme default 
-
-if has("gui_running")
-  colorscheme solarized
-
-  set guifont=Monaco\ for\ Powerline:h14
-  set bg=dark
-endif
-"highlight NonText guibg=#060606
-"highlight Folded  guibg=#0A0A0A guifg=#9090D0
 
 " Remove trailing whitespace on save for ruby files.
 au BufWritePre *.rb :%s/\s\+$//e
@@ -112,6 +117,9 @@ endfunction
 
 command! Q q
 
+map Q <Nop>
+map K <Nop>
+
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
 nmap <leader>k :NERDTreeToggle<cr>
@@ -121,11 +129,14 @@ imap <C-s> <esc>:w<CR>
 map <C-t> <esc>:tabnew<CR>
 map <Leader>gac :Gcommit -am ""<LEFT>
 map <Leader>gc :Gcommit -m ""<LEFT>
+map <Leader>sn :e ~/.vim/snippets/ruby.snippets<CR>
 map <Leader>w <c-w>w
 set completeopt=longest,menu
 set complete=.,w,b,u,t
-set wildmode=longest,list:longest
+set wildmenu
+set wildmode=list:full
 map <Leader>vi :tabe ~/.vimrc<CR>
+map <Leader>gvi :tabe ~/.gvimrc<CR>
 " Window navigation
 nmap <C-J> <C-W><C-J>
 nmap <C-K> <C-W><C-K>
@@ -143,11 +154,10 @@ nnoremap <Leader>r :w<cr>:call RunCurrentSpecFile()<CR>
 nnoremap <Leader>s :w<cr>:call RunNearestSpec()<CR>
 nnoremap <Leader>l :w<cr>:call RunLastSpec()<CR>
 map <Leader>o :w<cr>:call RunCurrentLineInTest()<CR>
-nmap <Leader>bi :source ~/.vimrc<cr>:BundleInstall<cr>
+nmap <Leader>bi :source ~/.vimrc<cr>:PluginInstall<cr>
 map <Leader>t :CommandT<CR>
 map <Leader>f :call OpenFactoryFile()<CR>
 
-let g:rspec_command = "!clear && zeus rspec {spec}"
 let g:airline_theme = 'airlineish'
 let g:airline_powerline_fonts = 1
 " Edit routes
@@ -155,10 +165,16 @@ command! Rroutes :e config/routes.rb
 command! RTroutes :tabe config/routes.rb
 command! RVroutes :vsp config/routes.rb
 
-" (Hopefully) removes the delay when hitting esc in insert mode
-set noesckeys
-set ttimeout
-set ttimeoutlen=1
+" Don't add the comment prefix when I hit enter or o/O on a comment line.
+set formatoptions-=or
+
+let g:CommandTMaxHeight=50
+let g:CommandTMatchWindowAtTop=1
+
+" Treat <li> and <p> tags like the block tags they are
+let g:html_indent_tags = 'li\|p'
+
+set wildignore=*.o,*.obj,tmp,.git,node_modules,bower_components
 
 " Stolen from r00k vimrc file
 function! OpenFactoryFile()
@@ -168,3 +184,59 @@ function! OpenFactoryFile()
     execute ":vsp spec/factories.rb"
   end
 endfunction
+
+" Display extra whitespace
+set list listchars=tab:»·,trail:·
+
+" Make it more obvious which paren I'm on
+hi MatchParen cterm=none ctermbg=black ctermfg=yellow
+
+" configure syntastic syntax checking to check on open as well as save
+let g:syntastic_check_on_open=1
+let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+
+if has("gui_running") 
+  " Don't add the comment prefix when I hit enter or o/O on a comment line.
+  set formatoptions-=or
+
+  " No toolbar
+  set guioptions-=T
+
+  " Use console dialogs
+  set guioptions+=c
+
+  colorscheme solarized
+  set guifont=Monaco\ for\ Powerline:h14
+  set bg=dark
+endif
+" ========================================================================
+" End of things set by me.
+" ========================================================================
+
+" Only do this part when compiled with support for autocommands.
+if has("autocmd")
+
+  " Enable file type detection.
+  " Use the default filetype settings, so that mail gets 'tw' set to 72,
+  " 'cindent' is on in C files, etc.
+  " Also load indent files, to automatically do language-dependent indenting.
+  filetype plugin indent on
+
+  " Put these in an autocmd group, so that we can delete them easily.
+  augroup vimrcEx
+  au!
+
+  " For all text files set 'textwidth' to 78 characters.
+  autocmd FileType text setlocal textwidth=78
+
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it for commit messages, when the position is invalid, or when
+  " inside an event handler (happens when dropping a file on gvim).
+  autocmd BufReadPost *
+        \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+        \   exe "normal g`\"" |
+        \ endif
+
+  augroup END
+
+endif " has("autocmd")

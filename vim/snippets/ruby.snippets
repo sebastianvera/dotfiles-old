@@ -93,6 +93,10 @@ snippet until
 	until ${1:condition}
 		${0}
 	end
+snippet nm
+	class ${1:`substitute(Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`} < ActiveRecord::Base
+		${0}
+	end
 snippet cla class .. end
 	class ${1:`substitute(Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`}
 		${0}
@@ -882,6 +886,10 @@ snippet sweeper
 			expire_page
 		end
 	end
+snippet vpo
+	validates_presence_of :${0}
+snippet vno
+	validates_numericality_of :${0}
 snippet va validates_associated
 	validates_associated :${0:attribute}
 snippet va validates .., :acceptance => true
@@ -1012,7 +1020,7 @@ snippet tctss
 snippet rsh
 	require 'spec_helper'
 	
-	describe `substitute(substitute(Filename(), '_spec$', '', ''), '\(_\|^\)\(.\)', '\u\2', 'g')` do
+	describe ${1:`substitute(substitute(Filename(), '_spec$', '', ''), '\(_\|^\)\(.\)', '\u\2', 'g')`} do
 		${0}
 	end
 snippet desc
@@ -1024,7 +1032,7 @@ snippet descm
 		${0:pending "Not implemented"}
 	end
 snippet cont
-	context "${1:message}" do
+	context '${1:message}' do
 		${0}
 	end
 snippet bef
@@ -1136,3 +1144,24 @@ snippet isresw
 	it { should respond_to(:${1}).with(${0}).arguments }
 snippet super_call
 	${1:super_class}.instance_method(:${0:method}).bind(self).call
+##########################
+#    FactoryGirl         #
+##########################
+snippet facd
+	FactoryGirl.define do
+		factory :${1:model} do
+			${0}
+		end
+	end
+snippet fac
+	factory :${1:model} do
+		${0}
+	end
+snippet trait
+	trait :${1:model} do
+		${0}
+	end
+snippet bu
+	build(:${1})
+snippet bs
+	build_stubbed(:${0})

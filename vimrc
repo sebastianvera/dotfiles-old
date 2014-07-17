@@ -23,6 +23,7 @@ Plugin 'tpope/vim-rvm'
 Plugin 'tpope/vim-rake'
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'godlygeek/tabular'
 Plugin 'vim-scripts/ctags.vim'
 Plugin 'vim-scripts/matchit.zip'
 Plugin 'ervandew/supertab'
@@ -46,6 +47,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'othree/html5.vim'
 Plugin 'pbrisbin/vim-mkdir'
 Plugin 'scrooloose/syntastic'
+Plugin 'jgdavey/tslime.vim'
 " Needed for snipmate
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
@@ -62,7 +64,6 @@ set t_Co=256
 set autoindent
 set autoread
 set backspace=indent,eol,start
-set colorcolumn=80
 set et
 set encoding=utf-8
 set fileencoding=utf-8
@@ -73,6 +74,7 @@ set ignorecase
 set incsearch
 set laststatus=2
 set nofoldenable
+set number
 set relativenumber
 set ruler
 set tabstop=2
@@ -103,12 +105,15 @@ highlight StatusLine ctermfg=blue ctermbg=yellow
 highlight PmenuSel ctermfg=black
 
 " Color scheme
-colorscheme default 
+colorscheme default
 
 " Remove trailing whitespace on save for ruby files.
 au BufWritePre *.rb :%s/\s\+$//e
 
 nmap <leader>h :nohlsearch<cr>
+nmap <leader>rd :Rake db:migrate<cr>
+vmap <leader>a: :Tabularize /:<cr>
+vmap <leader>a= :Tabularize /=<cr>
 
 command! TagFiles :call EchoTags()
 function! EchoTags()
@@ -148,15 +153,37 @@ nnoremap <Left> :echoe "Use h"<CR>
 nnoremap <Right> :echoe "Use l"<CR>
 nnoremap <Up> :echoe "Use k"<CR>
 nnoremap <Down> :echoe "Use j"<CR>
+noremap <F5> :CommandTFlush<CR>
+
+fun! ExecuteFile()
+  let l:rubycommand = "clear && ruby % \n"
+  let l:command = substitute(l:rubycommand, "%", expand('%'), "")
+  return l:command
+endfun
+
+nmap <Leader>e :call Send_to_Tmux(ExecuteFile())<CR>
+" nmap <Leader>e :call Send_to_Tmux("r\nDebug.new.test\n")<cr>
+
 
 " vim-rspec mappings
+let g:rspec_command = 'call Send_to_Tmux("clear \n bin/rspec {spec}\n")'
+" let g:rspec_command = 'call Send_to_Tmux("clear \n rspec {spec}\n")'
+
 nnoremap <Leader>r :w<cr>:call RunCurrentSpecFile()<CR>
 nnoremap <Leader>s :w<cr>:call RunNearestSpec()<CR>
 nnoremap <Leader>l :w<cr>:call RunLastSpec()<CR>
+nnoremap <Leader>a :w<cr>:call RunAllSpecs()<CR>
 map <Leader>o :w<cr>:call RunCurrentLineInTest()<CR>
 nmap <Leader>bi :source ~/.vimrc<cr>:PluginInstall<cr>
 map <Leader>t :CommandT<CR>
 map <Leader>f :call OpenFactoryFile()<CR>
+map <Leader>m :Rmodel<cr>
+map <Leader>mm :Rmodel 
+map <Leader>c :Rcontroller<cr>
+map <Leader>cc :Rcontroller 
+map <Leader>u :Eunittest <cr>
+map <Leader>uu :Eunittest 
+map <Leader>rr :Rroutes<cr>
 
 let g:airline_theme = 'airlineish'
 let g:airline_powerline_fonts = 1
@@ -174,7 +201,7 @@ let g:CommandTMatchWindowAtTop=1
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
 
-set wildignore=*.o,*.obj,tmp,.git,node_modules,bower_components
+set wildignore=*.o,*.obj,tmp,.git,node_modules,bower_components,build
 
 " Stolen from r00k vimrc file
 function! OpenFactoryFile()
@@ -226,9 +253,10 @@ if has("autocmd")
   augroup vimrcEx
   au!
 
-  " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
+  autocmd BufRead *_spec.rb syn keyword rubyRspec describe context it specify it_should_behave_like before after setup subject its shared_examples_for shared_context expect let
+  highlight def link rubyRspec Function
 
+  autocmd FileType ruby,eruby,yaml setlocal colorcolumn=80
   " When editing a file, always jump to the last known cursor position.
   " Don't do it for commit messages, when the position is invalid, or when
   " inside an event handler (happens when dropping a file on gvim).

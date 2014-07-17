@@ -13,7 +13,7 @@
   # [default] space-before-tab: looks for spaces before tabs at the beginning of
   # a line
   # whitespace = space-before-tab,indent-with-non-tab,trailing-space
-  editor = vim
+  editor = vim --noplugin
   autocrlf = input
 [color]
   ui = auto
@@ -35,7 +35,10 @@
 [merge]
   # Include summaries of merged commits in newly created merge commit messages
   log = true
+  ; ff = only
 [init]
   templatedir = ~/.git_template
 [alias]
   ctags = !.git/hooks/ctags
+[github]
+  user = VerAx1

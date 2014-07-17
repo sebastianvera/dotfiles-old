@@ -97,6 +97,10 @@ snippet nm
 	class ${1:`substitute(Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`} < ActiveRecord::Base
 		${0}
 	end
+snippet nc
+	class ${1:`substitute(Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`} < ApplicationController
+		${0}
+	end
 snippet cla class .. end
 	class ${1:`substitute(Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`}
 		${0}
@@ -1097,6 +1101,8 @@ snippet isama
 	it { should allow_mass_assignment_of :${0} }
 snippet isav
 	it { should allow_value(${1}).for :${0} }
+snippet isnav
+	it { should_not allow_value(${1}).for :${0} }
 snippet isee
 	it { should ensure_exclusion_of :${0} }
 snippet isei

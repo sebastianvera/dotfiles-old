@@ -11,6 +11,7 @@ alias sc='staging-console'
 
 alias rdm='rake db:migrate'
 alias rdtp='rake db:test:prepare'
+alias fs='foreman start'
 
 alias db-pull-staging='development restore staging'
 alias db-pull-production='development restore production'

@@ -144,27 +144,27 @@ snippet mod module .. end
 	module ${1:`substitute(Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`}
 		${0}
 	end
-snippet mod module .. module_function .. end
-	module ${1:`substitute(Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`}
-		module_function
-
-		${0}
-	end
-snippet mod module .. ClassMethods .. end
-	module ${1:`substitute(Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`}
-		module ClassMethods
-			${0}
-		end
-
-		module InstanceMethods
-
-		end
-
-		def self.included(receiver)
-			receiver.extend         ClassMethods
-			receiver.send :include, InstanceMethods
-		end
-	end
+# snippet mod module .. module_function .. end
+# 	module ${1:`substitute(Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`}
+# 		module_function
+#
+# 		${0}
+# 	end
+# snippet mod module .. ClassMethods .. end
+# 	module ${1:`substitute(Filename(), '\(_\|^\)\(.\)', '\u\2', 'g')`}
+# 		module ClassMethods
+# 			${0}
+# 		end
+#
+# 		module InstanceMethods
+#
+# 		end
+#
+# 		def self.included(receiver)
+# 			receiver.extend         ClassMethods
+# 			receiver.send :include, InstanceMethods
+# 		end
+# 	end
 # attr_reader
 snippet r
 	attr_reader :${0:attr_names}
@@ -577,7 +577,7 @@ snippet nam
 		${0}
 	end
 snippet tas
-	desc '${1:Task description}'
+	desc "${1:Task description}"
 	task :${2:task_name => [:dependent, :tasks]} do
 		${0}
 	end
@@ -586,7 +586,7 @@ snippet b
 	{ |${1:var}| ${0} }
 snippet begin
 	begin
-		raise 'A test exception.'
+		raise "A test exception."
 	rescue Exception => e
 		puts e.message
 		puts e.backtrace.inspect
@@ -598,9 +598,9 @@ snippet begin
 
 #debugging
 snippet debug
-	require 'ruby-debug'; debugger; true;
+	require "ruby-debug"; debugger; true;
 snippet pry
-	require 'pry'; binding.pry
+	require "pry"; binding.pry
 snippet strf
 	strftime("${1:%Y-%m-%d %H:%M:%S %z}")${0}
 #############################################
@@ -629,7 +629,7 @@ snippet asre
 snippet asrj
 	assert_rjs :${1:replace}, "${0:dom id}"
 snippet ass assert_select(..)
-	assert_select '${1:path}', :${2:text} => '${3:inner_html' ${4:do}
+	assert_select "${1:path}", :${2:text} => "${3:inner_html" ${4:do}
 snippet ba
 	before_action :${0:method}
 snippet bf
@@ -646,7 +646,7 @@ snippet defcreate
 
 		respond_to do |format|
 			if @$1.save
-				flash[:notice] = '$2 was successfully created.'
+				flash[:notice] = "$2 was successfully created."
 				format.html { redirect_to(@$1) }
 				format.xml  { render :xml => @$1, :status => :created, :location => @$1 }
 			else
@@ -702,7 +702,7 @@ snippet defupdate
 
 		respond_to do |format|
 			if @$1.update_attributes(params[:$1])
-				flash[:notice] = '$2 was successfully updated.'
+				flash[:notice] = "$2 was successfully updated."
 				format.html { redirect_to(@$1) }
 				format.xml  { head :ok }
 			else
@@ -730,7 +730,7 @@ snippet ho
 snippet hod
 	has_one :${1:object}, dependent: :${0:destroy}
 snippet i18
-	I18n.t('${1:type.key}')
+	I18n.t("${1:type.key}")
 snippet ist
 	<%= image_submit_tag("${1:agree.png}", :id => "${2:id}"${0} %>
 snippet log
@@ -748,7 +748,7 @@ snippet logi
 snippet logw
 	logger.warn { "${1:message}" }
 snippet mapc
-	${1:map}.${2:connect} '${0:controller/:action/:id}'
+	${1:map}.${2:connect} "${0:controller/:action/:id}"
 snippet mapca
 	${1:map}.catch_all "*${2:anything}", :controller => "${3:default}", :action => "${4:error}"
 snippet mapr
@@ -756,7 +756,7 @@ snippet mapr
 snippet maprs
 	${1:map}.resources :${0:resource}
 snippet mapwo
-	${1:map}.with_options :${2:controller} => '${3:thing}' do |$3|
+	${1:map}.with_options :${2:controller} => "${3:thing}" do |$3|
 		${0}
 	end
 
@@ -829,11 +829,11 @@ snippet rf
 snippet rfu
 	render :file => "${1:filepath}", :use_full_path => ${0:false}
 snippet ri
-	render :inline => "${0:<%= 'hello' %>}"
+	render :inline => "${0:<%= "hello" %>}"
 snippet ril
-	render :inline => "${1:<%= 'hello' %>}", :locals => { ${2::name} => "${3:value}"${0} }
+	render :inline => "${1:<%= "hello" %>}", :locals => { ${2::name} => "${3:value}"${0} }
 snippet rit
-	render :inline => "${1:<%= 'hello' %>}", :type => ${0::rxml}
+	render :inline => "${1:<%= "hello" %>}", :type => ${0::rxml}
 snippet rjson
 	render :json => ${0:text to render}
 snippet rl
@@ -1001,7 +1001,7 @@ snippet tcl
 	t.integer :lock_version, :null => false, :default => 0
 	${0}
 snippet tcr
-	t.references :${1:taggable}, :polymorphic => { :default => '${2:Photo}' }
+	t.references :${1:taggable}, :polymorphic => { :default => "${2:Photo}" }
 	${0}
 snippet tcs
 	t.string :${1:title}
@@ -1022,7 +1022,7 @@ snippet tctss
 #     Rspec snippets     #
 ##########################
 snippet rsh
-	require 'spec_helper'
+	require "spec_helper"
 	
 	describe ${1:`substitute(substitute(Filename(), '_spec$', '', ''), '\(_\|^\)\(.\)', '\u\2', 'g')`} do
 		${0}
@@ -1032,11 +1032,11 @@ snippet desc
 		${0}
 	end
 snippet descm
-	describe '${1:#method}' do
+	describe "${1:#method}" do
 		${0:pending "Not implemented"}
 	end
 snippet cont
-	context '${1:message}' do
+	context "${1:message}" do
 		${0}
 	end
 snippet bef
@@ -1068,7 +1068,7 @@ snippet shared
 snippet ibl
 	it_behaves_like ${0:"shared examples name"}
 snippet it
-	it '${1:spec_name}' do
+	it "${1:spec_name}" do
 		${0}
 	end
 snippet its
@@ -1091,11 +1091,11 @@ snippet isrf
 snippet isrw
 	it { should respond_with ${0:status} }
 snippet isr
-	it { should route(:${1:method}, '${0:path}') }
+	it { should route(:${1:method}, "${0:path}") }
 snippet isss
 	it { should set_session :${0:key} }
 snippet issf
-	it { should set_the_flash('${0}') }
+	it { should set_the_flash("${0}") }
 #ShouldaMatchers#ActiveModel
 snippet isama
 	it { should allow_mass_assignment_of :${0} }
@@ -1171,3 +1171,7 @@ snippet bu
 	build(:${1})
 snippet bs
 	build_stubbed(:${0})
+snippet seq
+	sequence(:${1:var}) { |b| "${2}" }${3}
+snippet cre
+	${1:var} = create(:$1)${2}

@@ -14,6 +14,7 @@ Plugin 'gmarik/Vundle.vim'
 " My bundles
 Plugin 'danro/rename.vim'
 Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-cucumber'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-fugitive'
@@ -48,9 +49,13 @@ Plugin 'othree/html5.vim'
 Plugin 'pbrisbin/vim-mkdir'
 Plugin 'scrooloose/syntastic'
 Plugin 'jgdavey/tslime.vim'
+Plugin 'skwp/greplace.vim'
 " Needed for snipmate
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
+" nelstrom's plugin depends on kana's
+Plugin 'kana/vim-textobj-user'
+Plugin 'nelstrom/vim-textobj-rubyblock'
 
 " All of your Plugins must be added before the following line
 call vundle#end() "required
@@ -166,8 +171,9 @@ nmap <Leader>e :call Send_to_Tmux(ExecuteFile())<CR>
 
 
 " vim-rspec mappings
-let g:rspec_command = 'call Send_to_Tmux("clear \n bin/rspec {spec}\n")'
-" let g:rspec_command = 'call Send_to_Tmux("clear \n rspec {spec}\n")'
+" let g:rspec_command = 'call Send_to_Tmux("bin/rspec {spec}\n")'
+" let g:rspec_command = 'call Send_to_Tmux("clear \n bin/rspec {spec}\n")'
+let g:rspec_command = "!bin/rspec {spec}"
 
 nnoremap <Leader>r :w<cr>:call RunCurrentSpecFile()<CR>
 nnoremap <Leader>s :w<cr>:call RunNearestSpec()<CR>
@@ -253,7 +259,8 @@ if has("autocmd")
   augroup vimrcEx
   au!
 
-  autocmd BufRead *_spec.rb syn keyword rubyRspec describe context it specify it_should_behave_like before after setup subject its shared_examples_for shared_context expect let
+  autocmd BufRead *_spec.rb syn keyword rubyRspec describe context it specify
+        \ it_should_behave_like before after setup subject its shared_examples_for shared_context expect let
   highlight def link rubyRspec Function
 
   autocmd FileType ruby,eruby,yaml setlocal colorcolumn=80

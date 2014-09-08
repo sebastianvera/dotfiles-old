@@ -9,8 +9,8 @@ ZSH=$HOME/.oh-my-zsh
 #ZSH_THEME="robbyrussell"
 ZSH_THEME="svera"
 # Example aliases
-alias zshconfig="mvim ~/.zshrc"
-alias ohmyzsh="mvim ~/.oh-my-zsh"
+alias zshconfig="vim ~/.zshrc"
+alias ohmyzsh="vim ~/.oh-my-zsh"
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -43,11 +43,14 @@ alias ohmyzsh="mvim ~/.oh-my-zsh"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git rails jsontools zsh-syntax-highlighting z)
+plugins=(git rails jsontools zsh-syntax-highlighting z tmux)
 
 # Disable flow control commands (keeps C-s from freezing everything)
 stty start undef
 stty stop undef
+
+# export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
+PATH=/usr/local/git/bin:/usr/local/bin:/sbin:/usr/sbin:$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 source $ZSH/oh-my-zsh.sh
 
@@ -55,7 +58,3 @@ source $ZSH/oh-my-zsh.sh
 source $HOME/dotfiles/zsh/aliases
 source $HOME/dotfiles/zsh/functions
 
-# Customize to your needs...
-export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
-
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

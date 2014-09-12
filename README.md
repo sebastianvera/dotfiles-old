@@ -6,7 +6,7 @@ Installation
 
 Clone this repository:
 
-```$ git clone git@github.com:VerAx1/dotfiles.git```
+```$ git clone git@github.com:sebastianvera/dotfiles.git```
 
 Then cd into the directory:
 

@@ -50,6 +50,7 @@ Plugin 'pbrisbin/vim-mkdir'
 Plugin 'scrooloose/syntastic'
 Plugin 'jgdavey/tslime.vim'
 Plugin 'skwp/greplace.vim'
+Plugin 'fatih/vim-go'
 " Needed for snipmate
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
@@ -173,7 +174,7 @@ nmap <Leader>e :call Send_to_Tmux(ExecuteFile())<CR>
 " vim-rspec mappings
 " let g:rspec_command = 'call Send_to_Tmux("bin/rspec {spec}\n")'
 " let g:rspec_command = 'call Send_to_Tmux("clear \n bin/rspec {spec}\n")'
-let g:rspec_command = "!bin/rspec {spec}"
+let g:rspec_command = '!bin/rspec {spec}'
 
 nnoremap <Leader>r :w<cr>:call RunCurrentSpecFile()<CR>
 nnoremap <Leader>s :w<cr>:call RunNearestSpec()<CR>
@@ -275,3 +276,16 @@ if has("autocmd")
   augroup END
 
 endif " has("autocmd")
+
+" Go Stuff
+au FileType go nmap <Leader>s <Plug>(go-implements)
+au FileType go nmap <Leader>i <Plug>(go-info)
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+au FileType go nmap gd <Plug>(go-def)
+au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+au FileType go nmap <Leader>ds <Plug>(go-def-split)
+au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>dt <Plug>(go-def-tab)

@@ -51,6 +51,8 @@ stty stop undef
 
 # export PATH=$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
 PATH=/usr/local/git/bin:/usr/local/bin:/sbin:/usr/sbin:$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+export GOPATH=$HOME/Code/go
+export PATH=$PATH:$GOPATH/bin
 
 source $ZSH/oh-my-zsh.sh
 

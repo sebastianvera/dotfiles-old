@@ -9,5 +9,5 @@ eval "$(rbenv init - zsh --no-rehash)"
 export GOPATH=$HOME/Code/go
 export PATH=$PATH:$GOPATH/bin
 export PATH="$PATH:/usr/local/opt/go/libexec/bin"
-# binstubs
+# binstubs - keep always at the EOF
 export PATH=".git/safe/../../bin:$PATH"

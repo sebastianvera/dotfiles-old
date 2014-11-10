@@ -1,3 +1,6 @@
+alias zshconfig="vim ~/.zshrc"
+alias ohmyzsh="vim ~/.oh-my-zsh"
+
 # Heroku staging
 alias staging-console='heroku run rails console --remote staging'
 alias staging-tail='heroku logs --tail --remote staging'
@@ -27,6 +30,7 @@ alias h='heroku'
 alias v='vim'
 alias gds='git diff --staged'
 alias glogg="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --max-count=30"
+alias glg="g lg"
 alias tics='udp TICSII'
 alias gim='udp Reconomiento\ de\ patrones/Proyecto\ 2/scraper/'
 alias tapas='cd ~/Documents/Ruby/RubyTapas'

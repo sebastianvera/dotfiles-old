@@ -34,13 +34,4 @@ alias glg="g lg"
 alias tics='udp TICSII'
 alias gim='udp Reconomiento\ de\ patrones/Proyecto\ 2/scraper/'
 alias tapas='cd ~/Documents/Ruby/RubyTapas'
-
-function ip() {
-  ifconfig | grep inet | grep broadcast | awk '{print $2}'
-}
-function ips() {
-  local private_ip=`ip`;
-  echo "Private ip: $private_ip";
-  local public_ip=`rip`
-  echo "Public ip: $public_ip";
-}
+eval "$(hub alias -s)" 

@@ -169,12 +169,12 @@ fun! ExecuteFile()
   return l:command
 endfun
 
-nmap <Leader>e :call Send_to_Tmux(ExecuteFile())<CR>
+" nmap <Leader>e :call Send_to_Tmux(ExecuteFile())<CR>
 " nmap <Leader>e :call Send_to_Tmux("r\nDebug.new.test\n")<cr>
 
 
 " vim-rspec mappings
-let g:rspec_command = 'call Send_to_Tmux("rspec {spec}\n")'
+" let g:rspec_command = 'call Send_to_Tmux("rspec {spec}\n")'
 " let g:rspec_command = 'call Send_to_Tmux("clear \n bin/rspec {spec}\n")'
 " let g:rspec_command = '!bin/rspec {spec}'
 

@@ -20,9 +20,9 @@ alias db-pull-staging='development restore staging'
 alias db-pull-production='development restore production'
 alias db-update-staging='staging restore production'
 
-alias so='source ~/dotfiles/zsh/aliases'
-alias aliases='vim ~/dotfiles/zsh/aliases'
-alias zshfunctions='vim ~/dotfiles/zsh/functions'
+alias so='source ~/dotfiles/zsh/aliases.zsh'
+alias aliases='vim ~/dotfiles/zsh/aliases.zsh'
+alias zshfunctions='vim ~/dotfiles/zsh/functions.zsh'
 
 alias a='ls -al'
 alias rip="curl -s http://remote-ip.herokuapp.com"
@@ -34,4 +34,3 @@ alias glg="g lg"
 alias tics='udp TICSII'
 alias gim='udp Reconomiento\ de\ patrones/Proyecto\ 2/scraper/'
 alias tapas='cd ~/Documents/Ruby/RubyTapas'
-eval "$(hub alias -s)" 

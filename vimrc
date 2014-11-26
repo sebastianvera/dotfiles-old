@@ -12,6 +12,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 " My bundles
+Plugin 'Raimondi/delimitMate'
 Plugin 'danro/rename.vim'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-cucumber'
@@ -24,10 +25,11 @@ Plugin 'tpope/vim-rvm'
 Plugin 'tpope/vim-rake'
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'godlygeek/tabular'
 Plugin 'vim-scripts/ctags.vim'
 Plugin 'vim-scripts/matchit.zip'
-Plugin 'ervandew/supertab'
+" Plugin 'ervandew/supertab'
 Plugin 'wincent/Command-T'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'ecomba/vim-ruby-refactoring'
@@ -51,15 +53,14 @@ Plugin 'scrooloose/syntastic'
 Plugin 'jgdavey/tslime.vim'
 Plugin 'skwp/greplace.vim'
 Plugin 'fatih/vim-go'
-Plugin 'Raimondi/delimitMate'
 Plugin 'jby/tmux.vim.git'
 Plugin 'mattn/gist-vim'
-" Needed for snipmate
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
 " nelstrom's plugin depends on kana's
 Plugin 'kana/vim-textobj-user'
 Plugin 'nelstrom/vim-textobj-rubyblock'
+Plugin 'junegunn/goyo.vim'
+Plugin 'amix/vim-zenroom2'
+Plugin 'SirVer/ultisnips'
 
 " All of your Plugins must be added before the following line
 call vundle#end() "required
@@ -98,6 +99,12 @@ set ts=2
 set vb
 set bg=dark
 
+set noswapfile                  " Don't use swapfile
+set nobackup                    " Don't   create annoying backup files
+set splitright                  " Split vertical windows right to the current windows
+set splitbelow                  " Split horizontal windows below to the current windows
+set autowrite                   " Automatically save before :next, :make etc.
+
 " (Hopefully) removes the delay when hitting esc in insert mode
 set noesckeys
 set ttimeout
@@ -135,7 +142,7 @@ map K <Nop>
 
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
-nmap <leader>k :NERDTreeToggle<cr>
+nnoremap <silent> <leader>z :Goyo<cr>
 inoremap <Tab> <C-P>
 map <C-s> <esc>:w<CR>
 imap <C-s> <esc>:w<CR>
@@ -222,7 +229,7 @@ function! OpenFactoryFile()
 endfunction
 
 " Display extra whitespace
-set list listchars=tab:»·,trail:·
+" set list listchars=tab:»·,trail:·
 
 " Make it more obvious which paren I'm on
 hi MatchParen cterm=none ctermbg=black ctermfg=yellow
@@ -279,6 +286,63 @@ if has("autocmd")
 
 endif " has("autocmd")
 
+" ==================== UltiSnips ====================
+function! g:UltiSnips_Complete()
+    call UltiSnips#ExpandSnippetOrJump()
+    if g:ulti_expand_or_jump_res == 0
+        if pumvisible()
+            return "\<C-N>"
+        else
+            return "\<TAB>"
+        endif
+    endif
+
+    return ""
+endfunction
+
+function! g:UltiSnips_Reverse()
+    call UltiSnips#JumpBackwards()
+    if g:ulti_jump_backwards_res == 0
+        return "\<C-P>"
+    endif
+
+    return ""
+endfunction
+
+
+if !exists("g:UltiSnipsJumpForwardTrigger")
+    let g:UltiSnipsJumpForwardTrigger = "<tab>"
+endif
+
+if !exists("g:UltiSnipsJumpBackwardTrigger")
+    let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+endif
+
+au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+au BufEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
+
+" ==================== NerdTree ====================
+" Open nerdtree in current dir, write our own custom function because
+" NerdTreeToggle just sucks and doesn't work for buffers
+function! g:NerdTreeFindToggle()
+    if nerdtree#isTreeOpen()
+        exec 'NERDTreeClose'
+    else
+        exec 'NERDTreeFind'
+    endif
+endfunction
+
+" For toggling
+noremap <Leader>k :<C-u>call g:NerdTreeFindToggle()<cr> 
+
+" ==================== DelimitMate ====================
+let g:delimitMate_expand_cr = 1
+let g:delimitMate_expand_space = 1
+
+" ==================== YouCompleteMe ====================
+let ycm_autoclose_preview_window_after_completion = 1
+let ycm_min_num_of_chars_for_completion = 1
+
 " Go Stuff
 au FileType go nmap <Leader>s <Plug>(go-implements)
 au FileType go nmap <Leader>i <Plug>(go-info)
@@ -291,3 +355,7 @@ au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
 au FileType go nmap <Leader>ds <Plug>(go-def-split)
 au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
 au FileType go nmap <Leader>dt <Plug>(go-def-tab)
+let g:go_fmt_command = "goimports"
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1

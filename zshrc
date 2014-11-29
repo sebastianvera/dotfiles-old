@@ -15,4 +15,3 @@ export LC_ALL=en_US.UTF-8
 
 source ~/.zsh/aliases.zsh
 source ~/.zsh/functions.zsh
-

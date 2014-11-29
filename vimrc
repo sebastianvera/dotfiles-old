@@ -61,6 +61,8 @@ Plugin 'nelstrom/vim-textobj-rubyblock'
 Plugin 'junegunn/goyo.vim'
 Plugin 'amix/vim-zenroom2'
 Plugin 'SirVer/ultisnips'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'fatih/molokai'
 
 " All of your Plugins must be added before the following line
 call vundle#end() "required
@@ -120,7 +122,8 @@ highlight StatusLine ctermfg=blue ctermbg=yellow
 highlight PmenuSel ctermfg=black
 
 " Color scheme
-colorscheme default
+let g:molokai_original=1
+colorscheme molokai
 
 " Remove trailing whitespace on save for ruby files.
 au BufWritePre *.rb :%s/\s\+$//e
@@ -201,14 +204,15 @@ map <Leader>u :Eunittest <cr>
 map <Leader>uu :Eunittest 
 map <Leader>rr :Rroutes<cr>
 
-let g:airline_theme = 'airlineish'
+let g:airline_theme = 'powerlineish'
 let g:airline_powerline_fonts = 1
-" Edit routes
-command! Rroutes :e config/routes.rb
+"Others airline themes: bubblegum, airlineish
+
 command! RTroutes :tabe config/routes.rb
 command! RVroutes :vsp config/routes.rb
 
 " Don't add the comment prefix when I hit enter or o/O on a comment line.
+"
 set formatoptions-=or
 
 let g:CommandTMaxHeight=50
@@ -222,9 +226,9 @@ set wildignore=*.o,*.obj,tmp,.git,node_modules,bower_components,build
 " Stolen from r00k vimrc file
 function! OpenFactoryFile()
   if filereadable("test/factories.rb")
-    execute ":vsp test/factories.rb"
+    execute ":tabnew test/factories.rb"
   else
-    execute ":vsp spec/factories.rb"
+    execute ":tabnew spec/factories.rb"
   end
 endfunction
 
@@ -241,16 +245,28 @@ let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
 if has("gui_running") 
   " Don't add the comment prefix when I hit enter or o/O on a comment line.
   set formatoptions-=or
+  set vb t_vb=
 
-  " No toolbar
-  set guioptions-=T
+  set guioptions-=m  "no menu
+  set guioptions-=T  "no toolbar
+  set guioptions-=l
+  set guioptions-=L
+  set guioptions-=r  "no scrollbar
+  set guioptions-=R
+
+  let macvim_skip_colorscheme=1
+  let g:molokai_original=1
+  colorscheme molokai
+  highlight SignColumn guibg=#272822
+
+
 
   " Use console dialogs
   set guioptions+=c
 
-  colorscheme solarized
+  " colorscheme solarized
   set guifont=Monaco\ for\ Powerline:h14
-  set bg=dark
+  " set bg=dark
 endif
 " ========================================================================
 " End of things set by me.
@@ -267,20 +283,20 @@ if has("autocmd")
 
   " Put these in an autocmd group, so that we can delete them easily.
   augroup vimrcEx
-  au!
+    au!
 
-  autocmd BufRead *_spec.rb syn keyword rubyRspec describe context it specify
-        \ it_should_behave_like before after setup subject its shared_examples_for shared_context expect let
-  highlight def link rubyRspec Function
+    autocmd BufRead *_spec.rb syn keyword rubyRspec describe context it specify
+          \ it_should_behave_like before after setup subject its shared_examples_for shared_context expect let
+    highlight def link rubyRspec Function
 
-  autocmd FileType ruby,eruby,yaml setlocal colorcolumn=80
-  " When editing a file, always jump to the last known cursor position.
-  " Don't do it for commit messages, when the position is invalid, or when
-  " inside an event handler (happens when dropping a file on gvim).
-  autocmd BufReadPost *
-        \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
-        \   exe "normal g`\"" |
-        \ endif
+    autocmd FileType ruby,eruby,yaml setlocal colorcolumn=80
+    " When editing a file, always jump to the last known cursor position.
+    " Don't do it for commit messages, when the position is invalid, or when
+    " inside an event handler (happens when dropping a file on gvim).
+    autocmd BufReadPost *
+          \ if &ft != 'gitcommit' && line("'\"") > 0 && line("'\"") <= line("$") |
+          \   exe "normal g`\"" |
+          \ endif
 
   augroup END
 
@@ -288,34 +304,34 @@ endif " has("autocmd")
 
 " ==================== UltiSnips ====================
 function! g:UltiSnips_Complete()
-    call UltiSnips#ExpandSnippetOrJump()
-    if g:ulti_expand_or_jump_res == 0
-        if pumvisible()
-            return "\<C-N>"
-        else
-            return "\<TAB>"
-        endif
+  call UltiSnips#ExpandSnippetOrJump()
+  if g:ulti_expand_or_jump_res == 0
+    if pumvisible()
+      return "\<C-N>"
+    else
+      return "\<TAB>"
     endif
+  endif
 
-    return ""
+  return ""
 endfunction
 
 function! g:UltiSnips_Reverse()
-    call UltiSnips#JumpBackwards()
-    if g:ulti_jump_backwards_res == 0
-        return "\<C-P>"
-    endif
+  call UltiSnips#JumpBackwards()
+  if g:ulti_jump_backwards_res == 0
+    return "\<C-P>"
+  endif
 
-    return ""
+  return ""
 endfunction
 
 
 if !exists("g:UltiSnipsJumpForwardTrigger")
-    let g:UltiSnipsJumpForwardTrigger = "<tab>"
+  let g:UltiSnipsJumpForwardTrigger = "<tab>"
 endif
 
 if !exists("g:UltiSnipsJumpBackwardTrigger")
-    let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 endif
 
 au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
@@ -325,11 +341,11 @@ au BufEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-
 " Open nerdtree in current dir, write our own custom function because
 " NerdTreeToggle just sucks and doesn't work for buffers
 function! g:NerdTreeFindToggle()
-    if nerdtree#isTreeOpen()
-        exec 'NERDTreeClose'
-    else
-        exec 'NERDTreeFind'
-    endif
+  if nerdtree#isTreeOpen()
+    exec 'NERDTreeClose'
+  else
+    exec 'NERDTreeFind'
+  endif
 endfunction
 
 " For toggling
@@ -348,7 +364,7 @@ au FileType go nmap <Leader>s <Plug>(go-implements)
 au FileType go nmap <Leader>i <Plug>(go-info)
 au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>tt <Plug>(go-test)
 au FileType go nmap <leader>c <Plug>(go-coverage)
 au FileType go nmap gd <Plug>(go-def)
 au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)

@@ -15,3 +15,7 @@ function ips() {
   local public_ip=`rip`
   echo "Public ip: $public_ip";
 }
+
+function editconflicts() { 
+  vim +/"<<<<<<<" $( git diff --name-only --diff-filter=U | xargs  )
+}

@@ -25,11 +25,10 @@ Plugin 'tpope/vim-rvm'
 Plugin 'tpope/vim-rake'
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-unimpaired'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'godlygeek/tabular'
 Plugin 'vim-scripts/ctags.vim'
 Plugin 'vim-scripts/matchit.zip'
-" Plugin 'ervandew/supertab'
+Plugin 'ervandew/supertab'
 Plugin 'wincent/Command-T'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'ecomba/vim-ruby-refactoring'
@@ -58,11 +57,12 @@ Plugin 'mattn/gist-vim'
 " nelstrom's plugin depends on kana's
 Plugin 'kana/vim-textobj-user'
 Plugin 'nelstrom/vim-textobj-rubyblock'
-Plugin 'junegunn/goyo.vim'
-Plugin 'amix/vim-zenroom2'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'SirVer/ultisnips'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'fatih/molokai'
+Plugin 'burnettk/vim-angular'
+Plugin 'majutsushi/tagbar'
 
 " All of your Plugins must be added before the following line
 call vundle#end() "required
@@ -113,7 +113,7 @@ set ttimeout
 set ttimeoutlen=1
 
 set timeoutlen=500
-
+set pastetoggle=<F2>
 
 " Highlight the status line
 highlight StatusLine ctermfg=blue ctermbg=yellow
@@ -132,6 +132,9 @@ nmap <leader>h :nohlsearch<cr>
 nmap <leader>rd :Rake db:migrate<cr>
 vmap <leader>a: :Tabularize /:<cr>
 vmap <leader>a= :Tabularize /=<cr>
+
+nmap k gk
+nmap j gj
 
 command! TagFiles :call EchoTags()
 function! EchoTags()
@@ -165,13 +168,15 @@ nmap <C-J> <C-W><C-J>
 nmap <C-K> <C-W><C-K>
 nmap <C-L> <C-W><C-L>
 nmap <C-H> <C-W><C-H>
-"
-" " Get off my lawn
-nnoremap <Left> :echoe "Use h"<CR>
-nnoremap <Right> :echoe "Use l"<CR>
-nnoremap <Up> :echoe "Use k"<CR>
-nnoremap <Down> :echoe "Use j"<CR>
+
 noremap <F5> :CommandTFlush<CR>
+
+" " Get off my lawn
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
+
 
 fun! ExecuteFile()
   let l:rubycommand = "clear && ruby % \n"
@@ -179,6 +184,7 @@ fun! ExecuteFile()
   return l:command
 endfun
 
+nmap <Leader>e :!clear && ruby %<cr>
 " nmap <Leader>e :call Send_to_Tmux(ExecuteFile())<CR>
 " nmap <Leader>e :call Send_to_Tmux("r\nDebug.new.test\n")<cr>
 
@@ -267,6 +273,8 @@ if has("gui_running")
   " colorscheme solarized
   set guifont=Monaco\ for\ Powerline:h14
   " set bg=dark
+  
+  " let g:rspec_command = 'call Send_to_Tmux("rspec {spec}\n")'
 endif
 " ========================================================================
 " End of things set by me.
@@ -302,41 +310,6 @@ if has("autocmd")
 
 endif " has("autocmd")
 
-" ==================== UltiSnips ====================
-function! g:UltiSnips_Complete()
-  call UltiSnips#ExpandSnippetOrJump()
-  if g:ulti_expand_or_jump_res == 0
-    if pumvisible()
-      return "\<C-N>"
-    else
-      return "\<TAB>"
-    endif
-  endif
-
-  return ""
-endfunction
-
-function! g:UltiSnips_Reverse()
-  call UltiSnips#JumpBackwards()
-  if g:ulti_jump_backwards_res == 0
-    return "\<C-P>"
-  endif
-
-  return ""
-endfunction
-
-
-if !exists("g:UltiSnipsJumpForwardTrigger")
-  let g:UltiSnipsJumpForwardTrigger = "<tab>"
-endif
-
-if !exists("g:UltiSnipsJumpBackwardTrigger")
-  let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-endif
-
-au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-au BufEnter * exec "inoremap <silent> " . g:UltiSnipsJumpBackwardTrigger . " <C-R>=g:UltiSnips_Reverse()<cr>"
-
 " ==================== NerdTree ====================
 " Open nerdtree in current dir, write our own custom function because
 " NerdTreeToggle just sucks and doesn't work for buffers
@@ -358,6 +331,12 @@ let g:delimitMate_expand_space = 1
 " ==================== YouCompleteMe ====================
 let ycm_autoclose_preview_window_after_completion = 1
 let ycm_min_num_of_chars_for_completion = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
 
 " Go Stuff
 au FileType go nmap <Leader>s <Plug>(go-implements)
@@ -375,3 +354,15 @@ let g:go_fmt_command = "goimports"
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
+
+" ==================== UltiSnips ====================
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+" Javascript
+let g:used_javascript_libs = 'jquery,underscore,angularjs'
+
+" Tagbar
+nmap <F8> :TagbarToggle<CR>

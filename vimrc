@@ -366,3 +366,4 @@ let g:used_javascript_libs = 'jquery,underscore,angularjs'
 
 " Tagbar
 nmap <F8> :TagbarToggle<CR>
+let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"

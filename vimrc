@@ -54,6 +54,7 @@ Plugin 'skwp/greplace.vim'
 Plugin 'fatih/vim-go'
 Plugin 'jby/tmux.vim.git'
 Plugin 'mattn/gist-vim'
+Plugin 'mattn/webapi-vim'
 " nelstrom's plugin depends on kana's
 Plugin 'kana/vim-textobj-user'
 Plugin 'nelstrom/vim-textobj-rubyblock'
@@ -122,8 +123,9 @@ highlight StatusLine ctermfg=blue ctermbg=yellow
 highlight PmenuSel ctermfg=black
 
 " Color scheme
-let g:molokai_original=1
-colorscheme molokai
+" let g:molokai_original=1
+" colorscheme molokai
+colorscheme default
 
 " Remove trailing whitespace on save for ruby files.
 au BufWritePre *.rb :%s/\s\+$//e
@@ -184,7 +186,8 @@ fun! ExecuteFile()
   return l:command
 endfun
 
-nmap <Leader>e :!clear && ruby %<cr>
+" nmap <Leader>e :!clear && ruby %<cr>
+nmap <Leader>e :!clang++ -stdlib=libc++ -std=gnu++11 % -o a && clear && ./a < %.input<cr>
 " nmap <Leader>e :call Send_to_Tmux(ExecuteFile())<CR>
 " nmap <Leader>e :call Send_to_Tmux("r\nDebug.new.test\n")<cr>
 
@@ -194,21 +197,20 @@ nmap <Leader>e :!clear && ruby %<cr>
 " let g:rspec_command = 'call Send_to_Tmux("clear \n bin/rspec {spec}\n")'
 " let g:rspec_command = '!bin/rspec {spec}'
 
-nnoremap <Leader>r :w<cr>:call RunCurrentSpecFile()<CR>
-nnoremap <Leader>s :w<cr>:call RunNearestSpec()<CR>
-nnoremap <Leader>l :w<cr>:call RunLastSpec()<CR>
-nnoremap <Leader>a :w<cr>:call RunAllSpecs()<CR>
-map <Leader>o :w<cr>:call RunCurrentLineInTest()<CR>
+nnoremap <Leader>r :call RunCurrentSpecFile()<CR>
+nnoremap <Leader>s :call RunNearestSpec()<CR>
+nnoremap <Leader>l :call RunLastSpec()<CR>
+nnoremap <Leader>a :call RunAllSpecs()<CR>
 nmap <Leader>bi :source ~/.vimrc<cr>:PluginInstall<cr>
 map <Leader>t :CommandT<CR>
 map <Leader>f :call OpenFactoryFile()<CR>
-map <Leader>m :Rmodel<cr>
-map <Leader>mm :Rmodel 
-map <Leader>c :Rcontroller<cr>
-map <Leader>cc :Rcontroller 
+map <Leader>m :Emodel<cr>
+map <Leader>mm :Emodel 
+map <Leader>c :Econtroller<cr>
+map <Leader>cc :Econtroller 
 map <Leader>u :Eunittest <cr>
 map <Leader>uu :Eunittest 
-map <Leader>rr :Rroutes<cr>
+map <Leader>rr :Einitializer<cr>
 
 let g:airline_theme = 'powerlineish'
 let g:airline_powerline_fonts = 1
@@ -244,9 +246,10 @@ endfunction
 " Make it more obvious which paren I'm on
 hi MatchParen cterm=none ctermbg=black ctermfg=yellow
 
-" configure syntastic syntax checking to check on open as well as save
-let g:syntastic_check_on_open=1
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_html_tidy_ignore_errors = [" proprietary attribute \"ng-"]
+let g:syntastic_ruby_checkers = ["rubocop"]
 
 if has("gui_running") 
   " Don't add the comment prefix when I hit enter or o/O on a comment line.
@@ -314,7 +317,7 @@ endif " has("autocmd")
 " Open nerdtree in current dir, write our own custom function because
 " NerdTreeToggle just sucks and doesn't work for buffers
 function! g:NerdTreeFindToggle()
-  if nerdtree#isTreeOpen()
+  if g:NERDTree.IsOpen()
     exec 'NERDTreeClose'
   else
     exec 'NERDTreeFind'

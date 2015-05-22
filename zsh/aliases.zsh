@@ -19,6 +19,7 @@ alias fs='foreman start'
 alias db-pull-staging='development restore staging'
 alias db-pull-production='development restore production'
 alias db-update-staging='staging restore production'
+alias db-pull='production backup && development restore production'
 
 alias so='source ~/dotfiles/zsh/aliases.zsh'
 alias aliases='vim ~/dotfiles/zsh/aliases.zsh'
@@ -31,6 +32,6 @@ alias v='vim'
 alias gds='git diff --staged'
 alias glogg="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --max-count=30"
 alias glg="g lg"
-alias tics='udp TICSII'
+alias tics='udp "TICS III"'
 alias gim='udp Reconomiento\ de\ patrones/Proyecto\ 2/scraper/'
 alias tapas='cd ~/Documents/Ruby/RubyTapas'

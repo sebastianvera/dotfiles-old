@@ -63,7 +63,10 @@ Plugin 'SirVer/ultisnips'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'fatih/molokai'
 Plugin 'burnettk/vim-angular'
+Plugin 'mxw/vim-jsx'
 Plugin 'majutsushi/tagbar'
+Plugin 'ap/vim-css-color'
+Plugin 'w0ng/vim-hybrid'
 
 " All of your Plugins must be added before the following line
 call vundle#end() "required
@@ -174,10 +177,10 @@ nmap <C-H> <C-W><C-H>
 noremap <F5> :CommandTFlush<CR>
 
 " " Get off my lawn
-noremap <Up> <NOP>
-noremap <Down> <NOP>
-noremap <Left> <NOP>
-noremap <Right> <NOP>
+" noremap <Up> <NOP>
+" noremap <Down> <NOP>
+" noremap <Left> <NOP>
+" noremap <Right> <NOP>
 
 
 fun! ExecuteFile()
@@ -186,8 +189,13 @@ fun! ExecuteFile()
   return l:command
 endfun
 
+" nmap <Leader>e :!clear && python %<cr>
+" nmap <Leader>e :!clear && node /Users/svera/Code/fipres/test.js<cr>
 " nmap <Leader>e :!clear && ruby %<cr>
-nmap <Leader>e :!clang++ -stdlib=libc++ -std=gnu++11 % -o a && clear && ./a < %.input<cr>
+" nmap <Leader>e :!clang++ -stdlib=libc++ -std=gnu++11 % -o a && clear && ./a < %.input<cr>
+" nmap <Leader>e :!clear && node %<cr>
+nmap <Leader>e :call Send_to_Tmux("clear && python predict.py 494f27e7029cff9092c6fbd5caaef09f892c6ab105cb9311 -s 2015-01-01 -e 2015-03-31 -m linear -g monthly\n")<CR>
+" nmap <Leader>e :call Send_to_Tmux("clear && node lib/main.js\n")<CR>
 " nmap <Leader>e :call Send_to_Tmux(ExecuteFile())<CR>
 " nmap <Leader>e :call Send_to_Tmux("r\nDebug.new.test\n")<cr>
 
@@ -250,6 +258,7 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_html_tidy_ignore_errors = [" proprietary attribute \"ng-"]
 let g:syntastic_ruby_checkers = ["rubocop"]
+" let g:syntastic_javascript_checkers = ['eslint']
 
 if has("gui_running") 
   " Don't add the comment prefix when I hit enter or o/O on a comment line.
@@ -265,7 +274,7 @@ if has("gui_running")
 
   let macvim_skip_colorscheme=1
   let g:molokai_original=1
-  colorscheme molokai
+  colorscheme hybrid
   highlight SignColumn guibg=#272822
 
 

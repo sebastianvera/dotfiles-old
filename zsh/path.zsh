@@ -1,4 +1,4 @@
-export PATH="/usr/local/bin:$HOME/.bin:/usr/sbin:/sbin:$PATH"
+# export PATH="/usr/local/bin:$HOME/.bin:/usr/sbin:/sbin:$PATH" # This is on .zprofile
 # rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init - zsh --no-rehash)"

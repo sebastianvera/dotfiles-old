@@ -15,13 +15,11 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'danro/rename.vim'
 Plugin 'tpope/vim-rails'
-Plugin 'tpope/vim-cucumber'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-bundler'
-Plugin 'tpope/vim-rvm'
 Plugin 'tpope/vim-rake'
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-unimpaired'
@@ -32,19 +30,12 @@ Plugin 'ervandew/supertab'
 Plugin 'wincent/Command-T'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'ecomba/vim-ruby-refactoring'
-Plugin 'tomtom/tcomment_vim'
+Plugin 'tpope/vim-commentary'
 Plugin 'thoughtbot/vim-rspec'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'digitaltoad/vim-jade'
-Plugin 'pangloss/vim-javascript'
-Plugin 'jelera/vim-javascript-syntax'
-Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'mattn/emmet-vim'
-Plugin 'moll/vim-node'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'bling/vim-airline'
 Plugin 'paranoida/vim-airlineish'
-Plugin 'kchmck/vim-coffee-script'
 Plugin 'scrooloose/nerdtree'
 Plugin 'othree/html5.vim'
 Plugin 'pbrisbin/vim-mkdir'
@@ -62,11 +53,13 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'SirVer/ultisnips'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'fatih/molokai'
-Plugin 'burnettk/vim-angular'
-Plugin 'mxw/vim-jsx'
-Plugin 'majutsushi/tagbar'
 Plugin 'ap/vim-css-color'
 Plugin 'w0ng/vim-hybrid'
+Plugin 'kurkale6ka/vim-pairs'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'christoomey/vim-tmux-runner'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
 
 " All of your Plugins must be added before the following line
 call vundle#end() "required
@@ -76,10 +69,8 @@ syntax on
 
 let mapleader = ","
 set t_Co=256
-set autoindent
 set autoread
 set backspace=indent,eol,start
-set et
 set encoding=utf-8
 set fileencoding=utf-8
 set gdefault
@@ -115,8 +106,11 @@ set autowrite                   " Automatically save before :next, :make etc.
 set noesckeys
 set ttimeout
 set ttimeoutlen=1
-
 set timeoutlen=500
+set completeopt=longest,menu
+set complete=.,w,b,u,t
+set wildmenu
+set wildmode=list:full
 set pastetoggle=<F2>
 
 " Highlight the status line
@@ -134,7 +128,7 @@ colorscheme default
 au BufWritePre *.rb :%s/\s\+$//e
 
 nmap <leader>h :nohlsearch<cr>
-nmap <leader>rd :Rake db:migrate<cr>
+nmap <leader>rd :Rake db:migrate db:test:prepare<cr>
 vmap <leader>a: :Tabularize /:<cr>
 vmap <leader>a= :Tabularize /=<cr>
 
@@ -153,7 +147,6 @@ map K <Nop>
 
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
-nnoremap <silent> <leader>z :Goyo<cr>
 inoremap <Tab> <C-P>
 map <C-s> <esc>:w<CR>
 imap <C-s> <esc>:w<CR>
@@ -162,10 +155,6 @@ map <Leader>gac :Gcommit -am ""<LEFT>
 map <Leader>gc :Gcommit -m ""<LEFT>
 map <Leader>sn :e ~/.vim/snippets/ruby.snippets<CR>
 map <Leader>w <c-w>w
-set completeopt=longest,menu
-set complete=.,w,b,u,t
-set wildmenu
-set wildmode=list:full
 map <Leader>vi :tabe ~/.vimrc<CR>
 map <Leader>gvi :tabe ~/.gvimrc<CR>
 " Window navigation
@@ -325,6 +314,7 @@ endif " has("autocmd")
 " ==================== NerdTree ====================
 " Open nerdtree in current dir, write our own custom function because
 " NerdTreeToggle just sucks and doesn't work for buffers
+let NERDTreeShowHidden=1
 function! g:NerdTreeFindToggle()
   if g:NERDTree.IsOpen()
     exec 'NERDTreeClose'
@@ -344,6 +334,7 @@ let g:delimitMate_expand_space = 1
 let ycm_autoclose_preview_window_after_completion = 1
 let ycm_min_num_of_chars_for_completion = 1
 let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 " make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
@@ -373,9 +364,9 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-" Javascript
-let g:used_javascript_libs = 'jquery,underscore,angularjs'
+" tmux-runner
+let g:VtrUseVtrMaps = 1
+let g:VtrGitCdUpOnOpen = 0
+let g:VtrPercentage = 30
 
-" Tagbar
-nmap <F8> :TagbarToggle<CR>
-let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+let g:jsx_ext_required = 0

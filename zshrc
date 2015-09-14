@@ -1,7 +1,7 @@
 # OHMYZSH THINGS
 export ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="svera"
-plugins=(git rails golang github zsh-syntax-highlighting)
+plugins=(git rails golang npm github zsh-syntax-highlighting)
 
 # Set up path, before loading plugins
 source ~/.zsh/path.zsh
@@ -18,3 +18,6 @@ stty start undef stop undef
 
 source ~/.zsh/aliases.zsh
 source ~/.zsh/functions.zsh
+
+# fix terminals to send ctrl-h to neovim correctly
+[[ -f "~/.$TERM.ti" ]] && tic ~/.$TERM.ti

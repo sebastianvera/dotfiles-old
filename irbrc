@@ -11,7 +11,7 @@ IRB.conf[:PROMPT_MODE] = :SIMPLE
 IRB.conf[:AUTO_INDENT] = true
 
 begin
-  require "awesome_print"
+  require 'awesome_print'
 rescue Exception => e
   puts e
 end
@@ -31,10 +31,21 @@ class Object
   #   arr.ri :pop
   def ri(method = nil)
     unless method && method =~ /^[A-Z]/ # if class isn't specified
-      klass = self.kind_of?(Class) ? name : self.class.name
+      klass = self.is_a?(Class) ? name : self.class.name
       method = [klass, method].compact.join('#')
     end
     puts `ri '#{method}'`
+  end
+end
+
+module Kernel
+  def copy(str)
+    IO.popen('pbcopy', 'w') { |f| f << str.to_s }
+    str
+  end
+
+  def paste
+    `pbpaste`
   end
 end
 
@@ -45,3 +56,13 @@ end
 def r
   reload!
 end
+
+def load_irbrc(path)
+  return if (path == ENV['HOME']) || (path == '/')
+
+  irbrc = File.join(path, '.irbrc')
+
+  load irbrc if File.exist?(irbrc)
+end
+
+load_irbrc(Dir.pwd)

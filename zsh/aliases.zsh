@@ -32,6 +32,6 @@ alias v='vim'
 alias gds='git diff --staged'
 alias glogg="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --max-count=30"
 alias glg="g lg"
-alias tics='udp "TICS III"'
+alias examen='udp "examen"'
 alias gim='udp Reconomiento\ de\ patrones/Proyecto\ 2/scraper/'
 alias tapas='cd ~/Documents/Ruby/RubyTapas'

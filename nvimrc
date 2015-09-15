@@ -31,6 +31,7 @@ Plug 'kurkale6ka/vim-pairs'
 Plug 'w0ng/vim-hybrid'
 Plug 'bling/vim-airline' | Plug 'paranoida/vim-airlineish'
 Plug 'janko-m/vim-test', { 'for': 'ruby' }
+Plug 'ctrlpvim/ctrlp.vim'
 call plug#end()
 
 if shouldInstallBundles == 1
@@ -105,12 +106,8 @@ endif
 " Mappings
 inoremap <C-U> <C-G>u<C-U>
 noremap <Leader>so :w<CR> :so ~/.nvimrc<CR>
-noremap <Leader>vi :w<CR> :tabe ~/.nvimrc<CR>
+noremap <Leader>vi :tabe ~/.nvimrc<CR>
 noremap <Leader>pi :w<CR> :so ~/.nvimrc<CR> :PlugInstall<CR>
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
 noremap <Leader>h :nohl<CR>
 
 nnoremap <Leader><Leader> <C-^> 
@@ -134,3 +131,17 @@ let g:airline_powerline_fonts = 1
 " Neomake
 let g:neomake_ruby_enabled_maker = ["rubocop"]
 autocmd! BufWritePost * Neomake
+
+" vim-test
+let test#strategy = "vtr"
+nmap <silent> <leader>s :TestNearest<CR>
+nmap <silent> <leader>r :TestFile<CR>
+nmap <silent> <leader>a :TestSuite<CR>
+nmap <silent> <leader>l :TestLast<CR>
+
+" tmux-navigator
+let g:tmux_navigator_no_mappings = 1
+nnoremap <silent> <c-h> :TmuxNavigateLeft<CR>
+nnoremap <silent> <c-j> :TmuxNavigateDown<CR>
+nnoremap <silent> <c-k> :TmuxNavigateUp<CR>
+nnoremap <silent> <c-l> :TmuxNavigateRight<CR>

@@ -1,0 +1,1 @@
+/Users/svera/dotfiles/vim/syntax/snippet.vim

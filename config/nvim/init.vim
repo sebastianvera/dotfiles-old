@@ -3,16 +3,15 @@ let mapleader = " "
 " Install vundle
 let shouldInstallBundles = 0
 
-if !filereadable($HOME . "/.nvim/autoload/plug.vim")
+if !filereadable($HOME . "/.config/nvim/autoload/plug.vim")
   echo "~≥ Installing vim-plug \n"
   silent !curl -fLo $HOME/.nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   let shouldInstallBundles = 1
 endif
 
 " Plugins
-call plug#begin('~/.nvim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
@@ -32,6 +31,19 @@ Plug 'w0ng/vim-hybrid'
 Plug 'bling/vim-airline' | Plug 'paranoida/vim-airlineish'
 Plug 'janko-m/vim-test', { 'for': 'ruby' }
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'SirVer/ultisnips'
+Plug 'Valloric/YouCompleteMe', { 'do': 'yes \| ./install.py --clang-completer --gocode-completer' }
+let g:javascript_jsx_extensions = ['javascript', 'javascript.jsx', 'jsx']
+Plug 'mxw/vim-jsx', { 'for': g:javascript_jsx_extensions } | Plug 'pangloss/vim-javascript', { 'for': g:javascript_jsx_extensions, 'branch': 'develop' }
+Plug 'ap/vim-css-color', { 'for': ['css', 'scss', 'sass'] }
+Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss', 'sass'] }
+Plug 'ervandew/supertab'
+Plug 'honza/vim-snippets'
+Plug 'Raimondi/delimitMate' "must be before vim-endwise
+Plug 'tpope/vim-endwise' "must be after delimitMate
+Plug 'marijnh/tern_for_vim', { 'for': g:javascript_jsx_extensions, 'do': 'npm install' }
+Plug 'tpope/vim-markdown', { 'for': 'markdown' }
+Plug 'jgdavey/tslime.vim'
 call plug#end()
 
 if shouldInstallBundles == 1
@@ -53,6 +65,7 @@ colorscheme hybrid
 " General
 set autoread
 set autowrite
+set background=dark
 set number
 set relativenumber
 set noswapfile
@@ -92,7 +105,7 @@ if &listchars ==# 'eol:$'
   set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
 endif
 
-if v:version > 703 || v:version == 703 && has("patch541")
+if v:version > 703 || v:version == 703 && has('patch541')
 set formatoptions+=j " Delete comment character when joining commented lines
 endif
 
@@ -104,11 +117,13 @@ if !&sidescrolloff
 endif
 
 " Mappings
-inoremap <C-U> <C-G>u<C-U>
+
+inoremap <C-U> <C-G>u<C-U> 
 noremap <Leader>so :w<CR> :so ~/.nvimrc<CR>
 noremap <Leader>vi :tabe ~/.nvimrc<CR>
 noremap <Leader>pi :w<CR> :so ~/.nvimrc<CR> :PlugInstall<CR>
 noremap <Leader>h :nohl<CR>
+vnoremap <C-c> "*y
 
 nnoremap <Leader><Leader> <C-^> 
 
@@ -129,11 +144,11 @@ let g:airline_theme = 'powerlineish'
 let g:airline_powerline_fonts = 1
 
 " Neomake
-let g:neomake_ruby_enabled_maker = ["rubocop"]
 autocmd! BufWritePost * Neomake
 
 " vim-test
 let test#strategy = "vtr"
+" let test#strategy = "tslime"
 nmap <silent> <leader>s :TestNearest<CR>
 nmap <silent> <leader>r :TestFile<CR>
 nmap <silent> <leader>a :TestSuite<CR>
@@ -145,3 +160,26 @@ nnoremap <silent> <c-h> :TmuxNavigateLeft<CR>
 nnoremap <silent> <c-j> :TmuxNavigateDown<CR>
 nnoremap <silent> <c-k> :TmuxNavigateUp<CR>
 nnoremap <silent> <c-l> :TmuxNavigateRight<CR>
+
+" Ultisnips
+let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
+let g:UltiSnipsEditSplit = 'vertical'
+
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-j>', '<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-k>', '<C-p>', '<Up>']
+
+" jsx
+let g:jsx_ext_required = 0
+
+" delimitMate
+let g:delimitMate_expand_space = 1
+let g:delimitMate_expand_cr = 1
+
+" tern
+let g:tern_show_argument_hints = 'on_hold'
+
+" go 
+let g:go_fmt_command = 'goimports'

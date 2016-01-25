@@ -18,7 +18,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-bundler', { 'for': 'ruby' }
 Plug 'tpope/vim-rake', { 'for': 'ruby' }
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
-Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'airblade/vim-gitgutter'
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' } | Plug 'kana/vim-textobj-user'
 Plug 'vim-scripts/matchit.zip'
@@ -32,18 +31,20 @@ Plug 'bling/vim-airline' | Plug 'paranoida/vim-airlineish'
 Plug 'janko-m/vim-test', { 'for': 'ruby' }
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'SirVer/ultisnips'
-Plug 'Valloric/YouCompleteMe', { 'do': 'yes \| ./install.py --clang-completer --gocode-completer' }
 let g:javascript_jsx_extensions = ['javascript', 'javascript.jsx', 'jsx']
 Plug 'mxw/vim-jsx', { 'for': g:javascript_jsx_extensions } | Plug 'pangloss/vim-javascript', { 'for': g:javascript_jsx_extensions, 'branch': 'develop' }
 Plug 'ap/vim-css-color', { 'for': ['css', 'scss', 'sass'] }
 Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss', 'sass'] }
 Plug 'ervandew/supertab'
 Plug 'honza/vim-snippets'
+Plug 'Valloric/YouCompleteMe', { 'do': 'yes \| ./install.py --clang-completer --gocode-completer' }
 Plug 'Raimondi/delimitMate' "must be before vim-endwise
 Plug 'tpope/vim-endwise' "must be after delimitMate
 Plug 'marijnh/tern_for_vim', { 'for': g:javascript_jsx_extensions, 'do': 'npm install' }
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 Plug 'jgdavey/tslime.vim'
+Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile', 'Dockerfile'] }
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
 call plug#end()
 
 if shouldInstallBundles == 1
@@ -105,6 +106,8 @@ if &listchars ==# 'eol:$'
   set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
 endif
 
+set list
+
 if v:version > 703 || v:version == 703 && has('patch541')
 set formatoptions+=j " Delete comment character when joining commented lines
 endif
@@ -119,9 +122,9 @@ endif
 " Mappings
 
 inoremap <C-U> <C-G>u<C-U> 
-noremap <Leader>so :w<CR> :so ~/.nvimrc<CR>
-noremap <Leader>vi :tabe ~/.nvimrc<CR>
-noremap <Leader>pi :w<CR> :so ~/.nvimrc<CR> :PlugInstall<CR>
+noremap <Leader>so :w<CR> :so ~/.config/nvim/init.vim<CR>
+noremap <Leader>vi :tabe ~/.config/nvim/init.vim<CR>
+noremap <Leader>pi :w<CR> :so ~/.config/nvim/init.vim<CR> :PlugInstall<CR>
 noremap <Leader>h :nohl<CR>
 vnoremap <C-c> "*y
 
@@ -138,17 +141,22 @@ command! Q q
 let g:VtrUseVtrMaps = 1
 let g:VtrGitCdUpOnOpen = 0
 let g:VtrPercentage = 30
+let g:vtr_filetype_runner_overrides = {
+      \ 'go': 'go run {file}',
+      \ }
 
 " airline
 let g:airline_theme = 'powerlineish'
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#branch#enabled = 1
 
 " Neomake
 autocmd! BufWritePost * Neomake
 
 " vim-test
-let test#strategy = "vtr"
-" let test#strategy = "tslime"
+" let test#strategy = "vtr"
+let test#strategy = "tslime"
 nmap <silent> <leader>s :TestNearest<CR>
 nmap <silent> <leader>r :TestFile<CR>
 nmap <silent> <leader>a :TestSuite<CR>
@@ -166,6 +174,8 @@ let g:UltiSnipsExpandTrigger = '<tab>'
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
 let g:UltiSnipsEditSplit = 'vertical'
+" let g:UltiSnipsSnippetDirectories=['~/.config/nvim/UltiSnips', '~/.config/nvim/plugged/vim-snippets/snippets', '~/.config/nvim/vim-snippets/Ultisnips']
+" let g:UltiSnipsSnippetDirectories=['~/.config/nvim/UltiSnips']
 
 " make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-j>', '<C-n>', '<Down>']
@@ -178,8 +188,6 @@ let g:jsx_ext_required = 0
 let g:delimitMate_expand_space = 1
 let g:delimitMate_expand_cr = 1
 
-" tern
-let g:tern_show_argument_hints = 'on_hold'
-
 " go 
 let g:go_fmt_command = 'goimports'
+au FileType go nmap <Leader>gd <Plug>(go-doc)

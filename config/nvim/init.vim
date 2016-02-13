@@ -27,9 +27,11 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-runner'
 Plug 'kurkale6ka/vim-pairs'
 Plug 'w0ng/vim-hybrid'
-Plug 'bling/vim-airline' | Plug 'paranoida/vim-airlineish'
+Plug 'bling/vim-airline' | Plug 'paranoida/vim-airlineish' | Plug 'vim-airline/vim-airline-themes'
 Plug 'janko-m/vim-test', { 'for': 'ruby' }
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+" Plug 'ctrlpvim/ctrlp.vim'
 Plug 'SirVer/ultisnips'
 let g:javascript_jsx_extensions = ['javascript', 'javascript.jsx', 'jsx']
 Plug 'mxw/vim-jsx', { 'for': g:javascript_jsx_extensions } | Plug 'pangloss/vim-javascript', { 'for': g:javascript_jsx_extensions, 'branch': 'develop' }
@@ -40,11 +42,11 @@ Plug 'honza/vim-snippets'
 Plug 'Valloric/YouCompleteMe', { 'do': 'yes \| ./install.py --clang-completer --gocode-completer' }
 Plug 'Raimondi/delimitMate' "must be before vim-endwise
 Plug 'tpope/vim-endwise' "must be after delimitMate
-Plug 'marijnh/tern_for_vim', { 'for': g:javascript_jsx_extensions, 'do': 'npm install' }
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 Plug 'jgdavey/tslime.vim'
 Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile', 'Dockerfile'] }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
+Plug 'hhvm/vim-hack',  { 'for': 'php' }
 call plug#end()
 
 if shouldInstallBundles == 1
@@ -53,71 +55,47 @@ if shouldInstallBundles == 1
 endif
 
 " Vim Config
-if has('autocmd')
-  filetype plugin indent on
-endif
-
-if has('syntax') && !exists('g:syntax_on')
-  syntax enable
-endif
+filetype plugin indent on
+syntax enable
 
 colorscheme hybrid
 
 " General
-set autoread
 set autowrite
+set noswapfile nowritebackup nobackup
 set background=dark
-set number
-set relativenumber
-set noswapfile
+set number relativenumber
 set history=1000
-set showcmd
 set smarttab
 set ttimeout
 set ttimeoutlen=1
 set timeoutlen=500
-set incsearch
-set laststatus=2
 set wildmenu
+set wildmode=longest,list:longest
+set wildignore=*.o,*.obj,tmp,.git,node_modules,bower_components,.DS_Store,build
 set visualbell
 set fileformats+=mac
-set tabpagemax=50
 set display+=lastline
-set backspace=indent,eol,start
 set nofoldenable
-set nobackup
 set splitright
-"set splitbelow
-set wildignore=*.o,*.obj,tmp,.git,node_modules,bower_components,build  
+set cursorline
 
 " Indendation
 set autoindent
 set expandtab
 set tabstop=2
 set shiftwidth=2
+set shiftround
+set pastetoggle=<F2>
 
 " Search
 set gdefault
 set ignorecase
 set smartcase
 
-" From sensible.vim 
-if &listchars ==# 'eol:$'
-  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
-endif
-
 set list
-
-if v:version > 703 || v:version == 703 && has('patch541')
-set formatoptions+=j " Delete comment character when joining commented lines
-endif
-
-if !&scrolloff
-  set scrolloff=1
-endif
-if !&sidescrolloff
-  set sidescrolloff=5
-endif
+set scrolloff=1
+set sidescrolloff=5
 
 " Mappings
 
@@ -143,6 +121,7 @@ let g:VtrGitCdUpOnOpen = 0
 let g:VtrPercentage = 30
 let g:vtr_filetype_runner_overrides = {
       \ 'go': 'go run {file}',
+      \ 'php': 'hhvm {file}',
       \ }
 
 " airline
@@ -153,6 +132,7 @@ let g:airline#extensions#branch#enabled = 1
 
 " Neomake
 autocmd! BufWritePost * Neomake
+" let g:neomake_ruby_enabled_makers = ['mri', 'rubocop']
 
 " vim-test
 " let test#strategy = "vtr"
@@ -191,3 +171,6 @@ let g:delimitMate_expand_cr = 1
 " go 
 let g:go_fmt_command = 'goimports'
 au FileType go nmap <Leader>gd <Plug>(go-doc)
+
+" Fzf
+nnoremap <C-p> :FZF<cr>

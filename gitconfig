@@ -24,8 +24,10 @@
 [color "diff"]
   meta = yellow bold
   frag = magenta bold
+  commit = green bold
   old = red bold
   new = green bold
+  whitespace = red reverse
 [color "status"]
   added = green
   changed = red
@@ -44,7 +46,17 @@
   edit-unmerged = "!f() { git diff --name-status --diff-filter=U | cut -f2 ; }; nvim `f`"
   add-unmerged = "!f() { git diff --name-status --diff-filter=U | cut -f2 ; }; git add `f`"
   branches = for-each-ref --sort=-committerdate --format=\"%(color:blue)%(authordate:relative)\t%(color:red)%(authorname)\t%(color:white)%(color:bold)%(refname:short)\" refs/remotes
+	ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ | tr , '\n' ;}; gi"
+  standup = shortlog --since=yesterday
+  today = shortlog --since=midnight
+  pr = pull-request
+  co = checkout
 [rebase]
   autosquash = true
 [github]
   user = sebastianvera
+[pager]
+	; diff = diff-so-fancy | less --tabs=4 -RX
+	; show = diff-so-fancy | less --tabs=4 -RX
+	diff = diff-highlight | less --tabs=4 -RX
+	show = diff-highlight | less --tabs=4 -RX

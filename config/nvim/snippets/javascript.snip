@@ -1,0 +1,48 @@
+snippet     React
+abbr        import React from 'react'
+options     head
+  import React from 'react'
+
+snippet     imp
+abbr        import foo from 'foo'
+options     head
+  import ${1} from '$1'
+
+snippet     impc
+abbr        import Component from 'components/Component'
+options     head
+  import ${1:React} from 'components/$1'
+
+snippet     impr
+abbr        import Reducer from 'redux/modules/reducer'
+options     head
+  import ${1:Reducer} from 'redux/modules/$1'
+
+snippet     impi
+abbr        import Foo from './Foo' ...
+options     head
+  import `expand('%:t:r')` from './`expand('%:t:r')`'
+  export default `expand('%:t:r')`
+  ${0}
+
+snippet     desc
+abbr        describe('Foo', () => {})
+options     head
+  describe('${1:Foo}', () => {
+    $2
+  })
+
+snippet     it
+abbr        it('...', () => {})
+options     head
+  it('${1:should ...}', () => {
+    $2
+  })
+
+snippet     itd
+abbr        it('...', (done) => {})
+options     head
+  it('${1:should ...}', (done) => {
+    $2
+    done()
+  })

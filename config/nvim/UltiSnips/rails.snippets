@@ -1,0 +1,51 @@
+snippet nrcs "describe Api::V1::Controller"
+require "spec_helper"
+
+describe Api::V1::${1:Foo}Controller, type: :request do
+	${0}
+end
+endsnippet
+
+snippet nrs "describe 'GET /api/...'"
+describe "${1:GET} /api/$2" do
+	context "not authenticated" do
+		before do
+			${1/\w/\l$0/g} "/api/${2}", {}, api_header(version: 1)
+		end
+
+		it { expect(response.status).to eq(401) }
+		it "should return a blank response" do
+			expect(response.body.strip).to be_empty
+		end
+	end
+
+	context "authenticated" do
+		${0}
+	end
+end
+endsnippet
+
+snippet aget "get '/api/...', {}, api_header(...)"
+get "/api/${1:path}", {}, api_header(version: 1${2:, token: token})
+${0}
+endsnippet
+
+snippet apost "post '/api/...', attributes, api_header(...)"
+post "/api/${1:path}", ${2:attributes}, api_header(version: 1${3:, token: token})
+${0}
+endsnippet
+
+snippet create "create(:object)"
+$1 = create(:${1:object}${2:,:trait})
+${0}
+endsnippet
+
+snippet nsz "class Serializer"
+class ${1:Foo}Serializer < ActiveModel::Serializer
+	attributes :${0}
+end
+endsnippet
+
+snippet isvl 
+it { should validate_length_of(:$1).is_at_most($2) }$0
+endsnippet

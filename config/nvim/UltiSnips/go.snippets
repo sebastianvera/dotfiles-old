@@ -1,0 +1,33 @@
+snippet ifel "if {} else {}"
+if $1 {
+	$2
+} else {
+	$0
+}
+endsnippet
+
+snippet errp "if err != nil { panic(err) }"
+if err != nil {
+	panic(err)
+}
+endsnippet
+
+snippet logerr "Description" b
+
+endsnippet
+
+snippet pr "fmt.Printf('%#v\n\', foo)" b
+fmt.Printf("%#v\n", $1)$0
+endsnippet
+
+snippet ife "if err != nil {}"
+if err != nil {
+	$0
+}
+endsnippet
+
+snippet errc "if err := ${VISUAL}; err != nil {}"
+if err := ${VISUAL}; err != nil {
+	$0
+}
+endsnippet

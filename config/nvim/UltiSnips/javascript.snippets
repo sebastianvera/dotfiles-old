@@ -1,0 +1,77 @@
+global !p
+import re
+
+def camelCase(input):
+	parts = re.findall(r"[^-_]+",input)
+	if len(parts) == 0:
+		return ""
+	camelParts = parts[0:1]+map(lambda s: s.title(), parts[1:])
+	return str.join("",camelParts)
+
+def nameForRequire(path):
+	return camelCase(path.split("/")[-1].split(".")[0])
+
+endglobal
+
+snippet uses "use strict" b
+'use strict';
+
+$0
+endsnippet
+
+snippet cl "console.log" b
+console.log($0)
+endsnippet
+
+snippet it "it('should ...', () => {})"
+it('${1:should ...}', () => {
+	$0
+})
+endsnippet
+
+snippet ita "it('should ...', async () => {})"
+it('${1:should ...}', async () => {
+	$0
+})
+endsnippet
+
+snippet itd "it('should ...', (done) => {})"
+it('${1:should ...}', (done) => {
+	$0
+	done()
+})
+endsnippet
+
+snippet exp "expect()"
+expect($1).$0
+endsnippet
+
+snippet desc "describe(...)" b
+describe('${1:`!p snip.rv = ''.join(x.title() for x in re.sub('(\.spec|\.js)$', '', snip.basename or 'ModuleName').split('_'))`}', () => {
+	$0
+})
+endsnippet
+
+snippet imp "import fooBar from 'foo-bar'" b
+import `!p
+def formatVariableName(path):
+	lastPart = path.split('/')[-1]
+	name = re.sub(r'[_\-]', '', lastPart.title())
+	return name[:1].lower() + name[1:]
+snip.rv = formatVariableName(re.sub('\.js$', '', t[1]))
+` from '${1}'$0
+endsnippet
+
+snippet impc "import Foo from 'foo'" b
+import `!p
+def formatVariableName(path):
+	lastPart = path.split('/')[-1]
+	if lastPart == 'underscore':
+		return '_'
+	elif lastPart == 'jquery':
+		return '$'
+	else:
+		return re.sub(r'[_\-]', '', lastPart.title())
+snip.rv = formatVariableName(re.sub('\.js$', '', t[1]))
+` from '${1}'$0
+endsnippet

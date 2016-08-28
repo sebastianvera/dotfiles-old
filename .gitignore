@@ -3,3 +3,10 @@
 
 config/*
 !config/nvim
+config/nvim/tmp/
+config/nvim/plugged/
+
+config/nvim/.init.vim-r*
+config/nvim/.netrwhist
+
+vim/bundle/

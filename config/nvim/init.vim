@@ -13,6 +13,7 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 " Plugins
 call plug#begin('~/.config/nvim/plugged')
+Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
@@ -49,7 +50,6 @@ Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 Plug 'jgdavey/tslime.vim'
 Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile', 'Dockerfile'] }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
-Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }
 Plug 'mattn/emmet-vim'
 Plug 'mattn/gist-vim' | Plug 'mattn/webapi-vim'
 Plug 'acarapetis/vim-colors-github'
@@ -59,8 +59,11 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'chrisbra/Colorizer'
 Plug 'elubow/cql-vim'
 Plug 'elixir-lang/vim-elixir'
+Plug 'archSeer/elixir.nvim'
 Plug 'thinca/vim-ref'
-Plug 'awetzel/elixir.nvim', { 'do': 'yes \| ./install.sh' }
+Plug 'ngmy/vim-rubocop', { 'for': 'ruby' }
+" Plug 'flowtype/vim-flow', { 'for': 'javascript', 'do': 'npm install -g flow-bin'}
+" Plug 'steelsojka/deoplete-flow', { 'for': 'javascript' }
 call plug#end()
 
 if shouldInstallBundles == 1
@@ -89,6 +92,7 @@ set nofoldenable
 set splitright splitbelow
 set cursorline
 set pumheight=10
+set nowrap
 
 " Indendation
 set autoindent smarttab expandtab
@@ -105,9 +109,6 @@ set scrolloff=1 sidescrolloff=5
 
 colorscheme hybrid
 set bg=dark
-" highlight NonText guibg=#060606
-" highlight Folded  guibg=#0A0A0A guifg=#9090D0
-" set bg=light
 
 " Mappings
 
@@ -240,6 +241,7 @@ let g:webdevicons_enable_airline_statusline=0
 " go
 let g:go_fmt_command = 'goimports'
 let g:go_highlight_types = 1
+let g:go_auto_type_info = 1
 au FileType go nmap <Leader>gd <Plug>(go-doc)
 au FileType go nmap <leader>r <Plug>(go-test)
 au FileType go nmap <leader>s <Plug>(go-test-func)
@@ -252,3 +254,30 @@ au FileType go command! -bang AS call go#alternate#Switch(0, "split")
 " EasyAlign
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
+
+" Rubocop
+let g:vimrubocop_keymap = 0
+nmap <Leader>ra :RuboCop -a<cr>
+
+" ==================================================
+" Spell check configuration
+" ==================================================
+let g:myLangList=["nospell","es_es","en_us"]
+function! ToggleSpell()
+  if !exists( "b:myLang" )
+    if &spell
+      let b:myLang=index(g:myLangList, &spelllang)
+    else
+      let b:myLang=0
+    endif
+  endif
+  let b:myLang=b:myLang+1
+  if b:myLang>=len(g:myLangList) | let b:myLang=0 | endif
+  if b:myLang==0
+    setlocal nospell
+  else
+    execute "setlocal spell spelllang=".get(g:myLangList, b:myLang)
+  endif
+  echo "spell checking language:" g:myLangList[b:myLang]
+endfunction
+nmap <silent> <F7> :call ToggleSpell()<CR>

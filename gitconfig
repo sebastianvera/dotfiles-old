@@ -37,7 +37,7 @@
 [push]
   default = current
 [merge]
-  # ff = only
+  ff = only
 [init]
   templatedir = ~/.git_template
 [alias]

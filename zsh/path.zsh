@@ -4,6 +4,7 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init - zsh --no-rehash)"
 # go 
 export GOPATH=$HOME/Code/go
+export FINCIERO_PATH=~/Code/
 export PATH=$PATH:$GOPATH/bin
 export PATH="$PATH:/usr/local/opt/go/libexec/bin"
 export PATH=$PATH:/Users/svera/PredictionIO/bin

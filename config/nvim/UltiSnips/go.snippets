@@ -12,10 +12,6 @@ if err != nil {
 }
 endsnippet
 
-snippet logerr "Description" b
-
-endsnippet
-
 snippet pr "fmt.Printf('%#v\n\', foo)" b
 fmt.Printf("%#v\n", $1)$0
 endsnippet
@@ -30,4 +26,26 @@ snippet errc "if err := ${VISUAL}; err != nil {}"
 if err := ${VISUAL}; err != nil {
 	$0
 }
+endsnippet
+
+snippet fhf "http.HandlerFunc" !b
+func ${1:handler}(w http.ResponseWriter, r *http.Request) {
+	logger := mojito.GetLogger(r)
+	writer := JSONResponseWriter{w, logger}
+
+	${0:fmt.Fprintf(w, "hello world")}
+}
+endsnippet
+
+snippet ferr "if errors.APIError" !b
+	if err != nil {
+		if e, ok := (err).(*errors.APIError); ok {
+			writer.WriteError(e)
+		} else {
+			logger.Critical("error", errors.Wrap(err))
+			writer.WriteError(errors.InternalServer("unexpected error", nil))
+		}
+
+		return
+	}
 endsnippet

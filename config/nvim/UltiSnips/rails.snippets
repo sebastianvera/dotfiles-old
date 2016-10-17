@@ -49,3 +49,23 @@ endsnippet
 snippet isvl 
 it { should validate_length_of(:$1).is_at_most($2) }$0
 endsnippet
+
+snippet question
+{
+	title: '${1}',
+	slug: '${2}',
+	description: '${3}',
+	image_url: '',
+	answers: [
+		${0}
+	]
+},
+endsnippet
+
+snippet answer
+{
+	title: '${1}',
+	description: '${3}',
+	image_url: '',
+},
+endsnippet

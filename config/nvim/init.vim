@@ -32,11 +32,9 @@ Plug 'christoomey/vim-tmux-runner'
 Plug 'wincent/terminus'
 Plug 'kurkale6ka/vim-pairs'
 Plug 'w0ng/vim-hybrid'
-Plug 'bling/vim-airline'| Plug 'paranoida/vim-airlineish' | Plug 'vim-airline/vim-airline-themes'
-Plug 'janko-m/vim-test', { 'for': ['ruby', 'javascript'] }
+Plug 'janko-m/vim-test', { 'for': ['ruby', 'javascript', 'elixir'] }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'isRuslan/vim-es6', { 'for': 'javascript' }
 Plug 'elzr/vim-json', {'for' : 'json'}
 Plug 'hail2u/vim-css3-syntax', { 'for': [ 'css', 'scss', 'sass'] }
 Plug 'ervandew/supertab'
@@ -52,18 +50,14 @@ Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile', 'Dockerfile'] }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'mattn/emmet-vim'
 Plug 'mattn/gist-vim' | Plug 'mattn/webapi-vim'
-Plug 'acarapetis/vim-colors-github'
 Plug 'junegunn/vim-easy-align'
 Plug 'nicholaides/words-to-avoid.vim'
-Plug 'ryanoasis/vim-devicons'
 Plug 'chrisbra/Colorizer'
-Plug 'elubow/cql-vim'
-Plug 'elixir-lang/vim-elixir'
-Plug 'archSeer/elixir.nvim'
 Plug 'thinca/vim-ref'
 Plug 'ngmy/vim-rubocop', { 'for': 'ruby' }
 " Plug 'flowtype/vim-flow', { 'for': 'javascript', 'do': 'npm install -g flow-bin'}
 " Plug 'steelsojka/deoplete-flow', { 'for': 'javascript' }
+Plug 'elixir-lang/vim-elixir' | Plug 'slashmili/alchemist.vim', { 'for': 'elixir' }
 call plug#end()
 
 if shouldInstallBundles == 1
@@ -78,6 +72,7 @@ syntax enable
 let g:python3_host_prog = '/usr/local/bin/python3'
 
 " General
+set ruler
 set autowrite
 set noswapfile nowritebackup nobackup
 set number relativenumber
@@ -140,27 +135,6 @@ let g:vtr_filetype_runner_overrides = {
       \ 'go': 'go run {file}',
       \ 'php': 'hhvm {file}'
       \ }
-
-" airline
-let g:airline_theme = 'jaguirre'
-
-let g:airline#extensions#hunks#enabled = 0
-let g:airline#extensions#syntastic#enabled = 0
-
-let g:airline_mode_map = {
-      \ '__' : '#',
-      \ 'n'  : 'N',
-      \ 'i'  : 'I',
-      \ 'R'  : 'R',
-      \ 'v'  : 'V',
-      \ 'V'  : 'V•L',
-      \ 'c'  : 'C',
-      \ "\026" : 'V•B',
-      \ 's'  : 'S',
-      \ 'S'  : 'S•L',
-      \ "\023" : 'S•B',
-      \ }
-let g:airline#extensions#whitespace#symbol = ""
 
 " Neomake
 autocmd! BufWritePost * Neomake
@@ -235,8 +209,6 @@ if has('persistent_undo')
   set undofile
   set undodir=~/.config/nvim/tmp/undo//
 endif
-
-let g:webdevicons_enable_airline_statusline=0
 
 " go
 let g:go_fmt_command = 'goimports'

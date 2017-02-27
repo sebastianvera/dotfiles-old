@@ -9,8 +9,6 @@ if !filereadable($HOME . "/.config/nvim/autoload/plug.vim")
   let shouldInstallBundles = 1
 endif
 
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-
 " Plugins
 call plug#begin('~/.config/nvim/plugged')
 Plug 'tpope/vim-vinegar'
@@ -32,7 +30,7 @@ Plug 'christoomey/vim-tmux-runner'
 Plug 'wincent/terminus'
 Plug 'kurkale6ka/vim-pairs'
 Plug 'w0ng/vim-hybrid'
-Plug 'janko-m/vim-test', { 'for': ['ruby', 'javascript', 'elixir'] }
+Plug 'janko-m/vim-test', { 'for': ['ruby', 'javascript'] }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'elzr/vim-json', {'for' : 'json'}
@@ -55,9 +53,6 @@ Plug 'nicholaides/words-to-avoid.vim'
 Plug 'chrisbra/Colorizer'
 Plug 'thinca/vim-ref'
 Plug 'ngmy/vim-rubocop', { 'for': 'ruby' }
-" Plug 'flowtype/vim-flow', { 'for': 'javascript', 'do': 'npm install -g flow-bin'}
-" Plug 'steelsojka/deoplete-flow', { 'for': 'javascript' }
-Plug 'elixir-lang/vim-elixir' | Plug 'slashmili/alchemist.vim', { 'for': 'elixir' }
 call plug#end()
 
 if shouldInstallBundles == 1
@@ -88,6 +83,8 @@ set splitright splitbelow
 set cursorline
 set pumheight=10
 set nowrap
+set inccommand=nosplit
+set showcmd
 
 " Indendation
 set autoindent smarttab expandtab
@@ -122,6 +119,8 @@ nmap j gj
 map Q <Nop>
 map K <Nop>
 
+inoremap jk <Esc>
+
 command! Q q
 
 " Do not show stupid q: window
@@ -139,13 +138,10 @@ let g:vtr_filetype_runner_overrides = {
 " Neomake
 autocmd! BufWritePost * Neomake
 let g:neomake_scss_enabled_checkers = ['scsslint']
-" let g:neomake_ruby_enabled_makers = ['mri', 'rubocop']
 
 " vim-test
 let test#strategy = "vtr"
 " let test#strategy = "tslime"
-let test#javascript#mocha#options='--compilers js:babel-register --require babel-polyfill'
-" let test#javascript#mocha#executable = 'npm test'
 "
 nmap <silent> <leader>s :TestNearest<CR>
 nmap <silent> <leader>r :TestFile<CR>
@@ -165,7 +161,6 @@ let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
 let g:UltiSnipsEditSplit = 'vertical'
 let g:UltiSnipsSnippetDir='~/.config/nvim/UltiSnips'
-" let g:UltiSnipsSnippetDirectories=['~/.config/nvim/UltiSnips', '~/.config/nvim/snippets']
 
 " delimitMate
 let g:delimitMate_expand_space = 1
@@ -176,6 +171,7 @@ let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
 
 " Fzf
 nnoremap <C-p> :FZF<cr>
+nnoremap <leader> :Buffers<cr>
 
 " neomake
 let g:neomake_javascript_enabled_makers = ['eslint']
@@ -222,6 +218,7 @@ au FileType go nmap <leader>c <Plug>(go-coverage-toggle)
 au FileType go command! -bang A call go#alternate#Switch(<bang>0, '')
 au FileType go command! -bang AV call go#alternate#Switch(0, "vsplit")
 au FileType go command! -bang AS call go#alternate#Switch(0, "split")
+au FileType go set colorcolumn=80
 
 " EasyAlign
 nmap ga <Plug>(EasyAlign)
@@ -253,3 +250,11 @@ function! ToggleSpell()
   echo "spell checking language:" g:myLangList[b:myLang]
 endfunction
 nmap <silent> <F7> :call ToggleSpell()<CR>
+
+set statusline+=%{exists('g:loaded_fugitive')?fugitive#statusline():''}
+set statusline+=%{exists('g:loaded_fugitive')?'\ ':''}
+set statusline+=%f\ [ASCII=\%03.3b]
+
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif

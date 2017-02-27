@@ -38,7 +38,7 @@ alias examen='udp "examen"'
 alias tapas='cd ~/Documents/Ruby/RubyTapas'
 alias amend='git commit --amend'
 alias gitconfig='nvim ~/.gitconfig'
-alias git=hub
+# alias git=hub
 alias ditum='cd ~/Code/go/src/github.com/ditum/'
 alias k=kubectl
 alias pods='kubectl get pods'
@@ -46,3 +46,5 @@ alias kpod='kubectl get pod --selector=app=kafka,tier=backend -o jsonpath={.item
 alias klogs='kubectl logs $(kpod) -f'
 alias zkpod='kubectl get pod --selector=app=kafka,tier=backend -o jsonpath={.items..metadata.name}'
 alias zklogs='kubectl logs $(zkpod) -f'
+
+alias spacemacs='HOME=~/spacemacs emacs'

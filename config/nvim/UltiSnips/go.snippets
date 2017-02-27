@@ -28,6 +28,70 @@ if err := ${VISUAL}; err != nil {
 }
 endsnippet
 
+snippet errcn "if err := ${VISUAL}; err != nil { return err }"
+if err := ${VISUAL}; err != nil {
+	return err
+}
+$0
+endsnippet
+
+snippet handle "handle(c *Context, w http.ResponseWriter, r *http.Request) (*Response, error)"
+func handle$1(c *Context, w http.ResponseWriter, r *http.Request) (*Response, error) {
+	$0
+
+	return &Response{Status: http.StatusOK}, nil
+}
+endsnippet
+
+snippet handlei "handle(c *Context, w http.ResponseWriter, r *http.Request) (*Response, error)"
+func handleGet${1:Service}(c *Context, w http.ResponseWriter, r *http.Request) (*Response, error) {
+	$3, err := c.$2Service.$2(id)
+	if err != nil {
+		return nil, err
+	}
+
+	return &Response{Data: $3, Status: http.StatusOK}, nil
+}
+endsnippet
+
+snippet handleg "handle(c *Context, w http.ResponseWriter, r *http.Request) (*Response, error)"
+func handleGet${1:Service}(c *Context, w http.ResponseWriter, r *http.Request) (*Response, error) {
+	ctx := r.Context()
+	id, ok := ctx.Value("id").(string)
+	if !ok {
+		return nil, errNotFound
+	}
+
+	$2, err := c.$1Service.$1(id)
+	if err != nil {
+		switch err {
+		case socovesa.Err$1NotFound:
+			return nil, errNotFound
+		}
+
+		return nil, err
+	}
+
+	return &Response{Data: $2, Status: http.StatusOK}, nil
+}
+endsnippet
+
+snippet handlec "handle(c *Context, w http.ResponseWriter, r *http.Request) (*Response, error)"
+func handleCreate${1:Service}(c *Context, w http.ResponseWriter, r *http.Request) (*Response, error) {
+	$2 := new(socovesa.$1)
+	if err := UnmarshalJSON(r.Body, $2); err != nil {
+		return nil, errInvalidPayload
+	}
+
+	if err := c.$1Service.Create$1($2); err != nil {
+		return nil, err
+	}
+
+
+	return &Response{Data: $2, Status: http.StatusCreated}, nil
+}
+endsnippet
+
 snippet fhf "http.HandlerFunc" !b
 func ${1:handler}(w http.ResponseWriter, r *http.Request) {
 	logger := mojito.GetLogger(r)

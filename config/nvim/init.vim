@@ -53,6 +53,7 @@ Plug 'nicholaides/words-to-avoid.vim'
 Plug 'chrisbra/Colorizer'
 Plug 'thinca/vim-ref'
 Plug 'ngmy/vim-rubocop', { 'for': 'ruby' }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 call plug#end()
 
 if shouldInstallBundles == 1

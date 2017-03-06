@@ -36,7 +36,7 @@ alias glogg="git log --graph --pretty=format:'%Cred%h%Creset %an: %s - %Creset %
 alias glg="g lg"
 alias examen='udp "examen"'
 alias tapas='cd ~/Documents/Ruby/RubyTapas'
-alias amend='git commit --amend'
+alias amend='git commit -v --amend'
 alias gitconfig='nvim ~/.gitconfig'
 # alias git=hub
 alias ditum='cd ~/Code/go/src/github.com/ditum/'

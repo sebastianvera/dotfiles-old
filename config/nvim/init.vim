@@ -54,6 +54,8 @@ Plug 'chrisbra/Colorizer'
 Plug 'thinca/vim-ref'
 Plug 'ngmy/vim-rubocop', { 'for': 'ruby' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'leafgarland/typescript-vim'
+Plug 'mhartington/nvim-typescript'
 call plug#end()
 
 if shouldInstallBundles == 1

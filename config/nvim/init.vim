@@ -263,3 +263,5 @@ if has("autocmd")
 endif
 
 au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+
+let g:nvim_typescript#max_completion_detail=100

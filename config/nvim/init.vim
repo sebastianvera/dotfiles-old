@@ -54,6 +54,7 @@ Plug 'chrisbra/Colorizer'
 Plug 'thinca/vim-ref'
 Plug 'ngmy/vim-rubocop', { 'for': 'ruby' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
 Plug 'leafgarland/typescript-vim'
 Plug 'mhartington/nvim-typescript'
 call plug#end()
@@ -125,6 +126,7 @@ map K <Nop>
 inoremap jk <Esc>
 
 command! Q q
+command! Qa qa
 
 " Do not show stupid q: window
 map q: :q

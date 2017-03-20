@@ -23,6 +23,12 @@ snippet cl "console.log" b
 console.log($0)
 endsnippet
 
+snippet for "for()" b
+for (let ${1:i} = 0; $1 < ${2:n}; $1++) {
+	$0
+}
+endsnippet
+
 snippet it "it('should ...', () => {})"
 it('${1:should ...}', () => {
 	$0

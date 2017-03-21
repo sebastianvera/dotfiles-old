@@ -5,7 +5,7 @@ let shouldInstallBundles = 0
 
 if !filereadable($HOME . "/.config/nvim/autoload/plug.vim")
   echo "~≥ Installing vim-plug \n"
-  silent !curl -fLo $HOME/.nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  silent !curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   let shouldInstallBundles = 1
 endif
 
@@ -256,6 +256,7 @@ function! ToggleSpell()
 endfunction
 nmap <silent> <F7> :call ToggleSpell()<CR>
 
+set statusline=""
 set statusline+=%{exists('g:loaded_fugitive')?fugitive#statusline():''}
 set statusline+=%{exists('g:loaded_fugitive')?'\ ':''}
 set statusline+=%f\ [ASCII=\%03.3b]

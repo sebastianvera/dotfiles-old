@@ -55,8 +55,8 @@ Plug 'thinca/vim-ref'
 Plug 'ngmy/vim-rubocop', { 'for': 'ruby' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
-Plug 'leafgarland/typescript-vim'
-Plug 'mhartington/nvim-typescript'
+" Plug 'leafgarland/typescript-vim'
+" Plug 'mhartington/nvim-typescript'
 call plug#end()
 
 if shouldInstallBundles == 1
@@ -89,6 +89,7 @@ set pumheight=10
 set nowrap
 set inccommand=nosplit
 set showcmd
+set termguicolors
 
 " Indendation
 set autoindent smarttab expandtab
@@ -267,4 +268,4 @@ endif
 
 au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
-let g:nvim_typescript#max_completion_detail=100
+" let g:nvim_typescript#max_completion_detail=100

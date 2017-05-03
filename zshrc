@@ -39,5 +39,3 @@ source '/Users/svera/Downloads/google-cloud-sdk/completion.zsh.inc'
 
 # awscli completion
 source /usr/local/share/zsh/site-functions/_aws
-
-export PATH="$PATH:`yarn global bin`"

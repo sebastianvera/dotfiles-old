@@ -34,7 +34,7 @@ Plug 'janko-m/vim-test', { 'for': ['ruby', 'javascript'] }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'elzr/vim-json', {'for' : 'json'}
-Plug 'hail2u/vim-css3-syntax', { 'for': [ 'css', 'scss', 'sass'] }
+Plug 'hail2u/vim-css3-syntax', { 'for': [ 'css', 'scss', 'sass', 'javascript'] }
 Plug 'ervandew/supertab'
 Plug 'Shougo/deoplete.nvim'
 Plug 'SirVer/ultisnips'
@@ -57,6 +57,12 @@ Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
 " Plug 'leafgarland/typescript-vim'
 " Plug 'mhartington/nvim-typescript'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'elixir-lang/vim-elixir'
+Plug 'slashmili/alchemist.vim', { 'for': 'elixir' }
+Plug 'othree/html5.vim'
+Plug 'fleischie/vim-styled-components'
+Plug 'sbdchd/neoformat'
 call plug#end()
 
 if shouldInstallBundles == 1
@@ -116,6 +122,9 @@ noremap <Leader>pi :w<CR> :so ~/.config/nvim/init.vim<CR> :PlugInstall<CR>
 noremap <Leader>h :nohl<CR>
 noremap <Leader>sp :UltiSnipsEdit<CR>
 vnoremap <C-c> "*y
+vnoremap // y/\V<C-R>"<CR>
+vnoremap <silent> <Leader>ag y:Ag <C-R>"<CR>
+nnoremap <silent> <Leader>ag :Ag <C-R><C-W><CR>
 
 nnoremap <Leader><Leader> <C-^>
 
@@ -177,7 +186,7 @@ let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
 
 " Fzf
 nnoremap <C-p> :FZF<cr>
-nnoremap <leader> :Buffers<cr>
+nnoremap <leader>b :Buffers<cr>
 
 " neomake
 let g:neomake_javascript_enabled_makers = ['eslint']
@@ -196,7 +205,8 @@ au FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><Enter>
 " http://andrew.stwrt.ca/posts/project-specific-vimrc/
 set exrc
 
-autocmd FileType ruby,javascript,javascript.jsx,css,scss,html autocmd BufWritePre <buffer> :%s/\s\+$//e
+" autocmd FileType ruby,javascript,javascript.jsx,css,scss,html autocmd BufWritePre <buffer> :%s/\s\+$//e
+autocmd FileType ruby,css,scss,html autocmd BufWritePre <buffer> :%s/\s\+$//e
 autocmd BufRead,BufNewFile .eslintrc,.jscsrc,.jshintrc,.babelrc,.tern-project set ft=json
 
 " json
@@ -269,3 +279,18 @@ endif
 au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
 " let g:nvim_typescript#max_completion_detail=100
+
+" FZF
+" Insert mode completion
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" Prettier
+autocmd BufWritePre *.js Neoformat
+let g:neoformat_javascript_prettier = {
+      \ 'exe': 'prettier',
+      \ 'args': ['--single-quote', '--trailing-comma', 'es5'],
+      \ }
+let g:neoformat_enabled_javascript = ['prettier']

@@ -89,3 +89,13 @@ def formatVariableName(path):
 snip.rv = formatVariableName(re.sub('\.js$', '', t[1]))
 ` from '${1}'$0
 endsnippet
+
+snippet isc "import styled from 'styled-components'" b
+import styled from 'styled-components';$0
+endsnippet
+
+snippet sc "export const Component = styled.tag``" b
+export const ${1:Component} = styled.${2:div}\`
+$0
+\`;
+endsnippet

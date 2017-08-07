@@ -24,7 +24,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' } | Plug 'kana/vim-textobj-user'
 Plug 'vim-scripts/matchit.zip'
 Plug 'benekastah/neomake', { 'on': 'Neomake' }
-Plug 'fatih/vim-go', { 'for': 'go' }
+Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-runner'
 Plug 'wincent/terminus'
@@ -62,7 +62,9 @@ Plug 'elixir-lang/vim-elixir'
 Plug 'slashmili/alchemist.vim', { 'for': 'elixir' }
 Plug 'othree/html5.vim'
 Plug 'fleischie/vim-styled-components'
-Plug 'sbdchd/neoformat'
+Plug 'prettier/vim-prettier', {
+      \ 'do': 'yarn install',
+      \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
 call plug#end()
 
 if shouldInstallBundles == 1
@@ -175,7 +177,7 @@ let g:UltiSnipsExpandTrigger = '<tab>'
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
 let g:UltiSnipsEditSplit = 'vertical'
-let g:UltiSnipsSnippetDir='~/.config/nvim/UltiSnips'
+let g:UltiSnipsSnippetsDir='~/.config/nvim/UltiSnips'
 
 " delimitMate
 let g:delimitMate_expand_space = 1
@@ -271,6 +273,7 @@ set statusline=""
 set statusline+=%{exists('g:loaded_fugitive')?fugitive#statusline():''}
 set statusline+=%{exists('g:loaded_fugitive')?'\ ':''}
 set statusline+=%f\ [ASCII=\%03.3b]
+set statusline+=[COL=\%c]
 
 if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -288,9 +291,31 @@ imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 
 " Prettier
-autocmd BufWritePre *.js Neoformat
-let g:neoformat_javascript_prettier = {
-      \ 'exe': 'prettier',
-      \ 'args': ['--single-quote', '--trailing-comma', 'es5'],
-      \ }
-let g:neoformat_enabled_javascript = ['prettier']
+" Prettier configuration
+let g:prettier#autoformat = 1
+
+let g:prettier#exec_cmd_async = 1
+
+" max line lengh that prettier will wrap on
+let g:prettier#config#print_width = 80
+
+" number of spaces per indentation level
+let g:prettier#config#tab_width = 2
+
+" use tabs over spaces
+let g:prettier#config#use_tabs = 'false'
+
+" print semicolons
+let g:prettier#config#semi = 'true'
+
+" single quotes over double quotes
+let g:prettier#config#single_quote = 'true' 
+
+" print spaces between brackets
+let g:prettier#config#bracket_spacing = 'false' 
+
+" put > on the last line instead of new line
+let g:prettier#config#jsx_bracket_same_line = 'false' 
+
+" none|es5|all
+let g:prettier#config#trailing_comma = 'es5'

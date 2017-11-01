@@ -58,8 +58,8 @@ Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
 " Plug 'leafgarland/typescript-vim'
 " Plug 'mhartington/nvim-typescript'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'elixir-lang/vim-elixir'
-Plug 'slashmili/alchemist.vim', { 'for': 'elixir' }
+" Plug 'elixir-lang/vim-elixir'
+" Plug 'slashmili/alchemist.vim', { 'for': 'elixir' }
 Plug 'othree/html5.vim'
 Plug 'fleischie/vim-styled-components'
 Plug 'prettier/vim-prettier', {
@@ -123,6 +123,7 @@ noremap <Leader>vi :tabe ~/.config/nvim/init.vim<CR>
 noremap <Leader>pi :w<CR> :so ~/.config/nvim/init.vim<CR> :PlugInstall<CR>
 noremap <Leader>h :nohl<CR>
 noremap <Leader>sp :UltiSnipsEdit<CR>
+noremap <Leader>mp :Prettier<CR>
 vnoremap <C-c> "*y
 vnoremap // y/\V<C-R>"<CR>
 vnoremap <silent> <Leader>ag y:Ag <C-R>"<CR>
@@ -149,6 +150,7 @@ let g:VtrGitCdUpOnOpen = 0
 let g:VtrPercentage = 30
 let g:vtr_filetype_runner_overrides = {
       \ 'go': 'go run {file}',
+      \ 'cpp': 'g++ {file} && ./{file}',
       \ 'php': 'hhvm {file}'
       \ }
 
@@ -237,6 +239,7 @@ au FileType go command! -bang A call go#alternate#Switch(<bang>0, '')
 au FileType go command! -bang AV call go#alternate#Switch(0, "vsplit")
 au FileType go command! -bang AS call go#alternate#Switch(0, "split")
 au FileType go set colorcolumn=80
+au FileType javascript set tabstop=4 shiftwidth=4
 
 " EasyAlign
 nmap ga <Plug>(EasyAlign)
@@ -300,7 +303,7 @@ let g:prettier#exec_cmd_async = 1
 let g:prettier#config#print_width = 80
 
 " number of spaces per indentation level
-let g:prettier#config#tab_width = 2
+let g:prettier#config#tab_width = 4
 
 " use tabs over spaces
 let g:prettier#config#use_tabs = 'false'
@@ -312,7 +315,7 @@ let g:prettier#config#semi = 'true'
 let g:prettier#config#single_quote = 'true' 
 
 " print spaces between brackets
-let g:prettier#config#bracket_spacing = 'false' 
+let g:prettier#config#bracket_spacing = 'true' 
 
 " put > on the last line instead of new line
 let g:prettier#config#jsx_bracket_same_line = 'false' 

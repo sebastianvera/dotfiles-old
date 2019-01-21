@@ -48,3 +48,8 @@ alias zkpod='kubectl get pod --selector=app=kafka,tier=backend -o jsonpath={.ite
 alias zklogs='kubectl logs $(zkpod) -f'
 
 alias spacemacs='HOME=~/spacemacs emacs'
+alias yc="yarn commit"
+alias gitshareiq="git config user.email sebastian.vera@shareiq.com && git config commit.gpgsign false"
+alias code=code-insiders
+alias agn="ag --ignore={'*fixtures*','*mocks*','*snapshots*','*nocks*','*lock','*md','*test.js','*json','*.log'}"
+alias agi="ag --ignore={'*fixtures*','*mocks*','*snapshots*','*nocks*','*lock','*md','*test.js','*json','*.log','*node_modules*'}"

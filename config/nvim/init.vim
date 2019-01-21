@@ -16,55 +16,42 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-projectionist'
-Plug 'tpope/vim-bundler', { 'for': 'ruby' }
-Plug 'tpope/vim-rake', { 'for': 'ruby' }
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'airblade/vim-gitgutter'
-Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' } | Plug 'kana/vim-textobj-user'
 Plug 'vim-scripts/matchit.zip'
 Plug 'benekastah/neomake', { 'on': 'Neomake' }
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-runner'
 Plug 'wincent/terminus'
-Plug 'kurkale6ka/vim-pairs'
-Plug 'w0ng/vim-hybrid'
-Plug 'janko-m/vim-test', { 'for': ['ruby', 'javascript'] }
+Plug 'arcticicestudio/nord-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'elzr/vim-json', {'for' : 'json'}
-Plug 'hail2u/vim-css3-syntax', { 'for': [ 'css', 'scss', 'sass', 'javascript'] }
+Plug 'hail2u/vim-css3-syntax', { 'for': [ 'css', 'scss', 'sass'] }
 Plug 'ervandew/supertab'
+Plug 'Shougo/echodoc'
 Plug 'Shougo/deoplete.nvim'
 Plug 'SirVer/ultisnips'
 Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'Shougo/neoinclude.vim'
 Plug 'Raimondi/delimitMate' "must be before vim-endwise
-Plug 'tpope/vim-endwise' "must be after delimitMate
 Plug 'tpope/vim-markdown', { 'for': 'markdown' }
 Plug 'jgdavey/tslime.vim'
 Plug 'ekalinin/Dockerfile.vim', { 'for': ['dockerfile', 'Dockerfile'] }
-Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'mattn/emmet-vim'
-Plug 'mattn/gist-vim' | Plug 'mattn/webapi-vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'nicholaides/words-to-avoid.vim'
 Plug 'chrisbra/Colorizer'
-Plug 'thinca/vim-ref'
-Plug 'ngmy/vim-rubocop', { 'for': 'ruby' }
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
-" Plug 'leafgarland/typescript-vim'
-" Plug 'mhartington/nvim-typescript'
 Plug 'editorconfig/editorconfig-vim'
-" Plug 'elixir-lang/vim-elixir'
-" Plug 'slashmili/alchemist.vim', { 'for': 'elixir' }
 Plug 'othree/html5.vim'
-Plug 'fleischie/vim-styled-components'
 Plug 'prettier/vim-prettier', {
       \ 'do': 'yarn install',
-      \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
+      \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'yaml', 'html'] }
+Plug 'andreypopp/vim-colors-plain'
+" Plug 'mhartington/nvim-typescript', { 'do': './install.sh', 'for': 'typescript' }
+" Plug 'HerringtonDarkholme/yats.vim', { 'for': 'typescript' }
 call plug#end()
 
 if shouldInstallBundles == 1
@@ -112,11 +99,11 @@ set list
 set listchars=tab:▸\ ,trail:•,extends:»,precedes:«,nbsp:¬
 set scrolloff=1 sidescrolloff=5
 
-colorscheme hybrid
+" colorscheme nord
+colorscheme plain
 set bg=dark
 
 " Mappings
-
 inoremap <C-U> <C-G>u<C-U>
 noremap <Leader>so :w<CR> :so ~/.config/nvim/init.vim<CR>
 noremap <Leader>vi :tabe ~/.config/nvim/init.vim<CR>
@@ -124,6 +111,7 @@ noremap <Leader>pi :w<CR> :so ~/.config/nvim/init.vim<CR> :PlugInstall<CR>
 noremap <Leader>h :nohl<CR>
 noremap <Leader>sp :UltiSnipsEdit<CR>
 noremap <Leader>mp :Prettier<CR>
+noremap <Leader>gb :Gblame<CR>
 vnoremap <C-c> "*y
 vnoremap // y/\V<C-R>"<CR>
 vnoremap <silent> <Leader>ag y:Ag <C-R>"<CR>
@@ -134,7 +122,7 @@ nnoremap <Leader><Leader> <C-^>
 nmap k gk
 nmap j gj
 map Q <Nop>
-map K <Nop>
+" map K <Nop>
 
 inoremap jk <Esc>
 
@@ -150,22 +138,13 @@ let g:VtrGitCdUpOnOpen = 0
 let g:VtrPercentage = 30
 let g:vtr_filetype_runner_overrides = {
       \ 'go': 'go run {file}',
-      \ 'cpp': 'g++ {file} && ./{file}',
-      \ 'php': 'hhvm {file}'
+      \ 'cpp': 'g++ {file} && ./{file}'
       \ }
+nnoremap <silent> <leader>ap :VtrAttachToPane<CR>
 
 " Neomake
 autocmd! BufWritePost * Neomake
 let g:neomake_scss_enabled_checkers = ['scsslint']
-
-" vim-test
-let test#strategy = "vtr"
-" let test#strategy = "tslime"
-"
-nmap <silent> <leader>s :TestNearest<CR>
-nmap <silent> <leader>r :TestFile<CR>
-nmap <silent> <leader>a :TestSuite<CR>
-nmap <silent> <leader>l :TestLast<CR>
 
 " tmux-navigator
 let g:tmux_navigator_no_mappings = 1
@@ -193,7 +172,10 @@ nnoremap <C-p> :FZF<cr>
 nnoremap <leader>b :Buffers<cr>
 
 " neomake
+" Look for local eslint and if not use globally installed one
+let g:eslint_path = system('PATH=$(npm bin):$PATH && which eslint')
 let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_javascript_eslint_exe=substitute(g:eslint_path, '^\n*\s*\(.\{-}\)\n*\s*$', '\1', '')
 
 " vim-jsx
 let g:jsx_ext_required = 0
@@ -209,17 +191,22 @@ au FileType markdown vmap <Leader><Bslash> :EasyAlign*<Bar><Enter>
 " http://andrew.stwrt.ca/posts/project-specific-vimrc/
 set exrc
 
-" autocmd FileType ruby,javascript,javascript.jsx,css,scss,html autocmd BufWritePre <buffer> :%s/\s\+$//e
+autocmd FileType ruby,javascript,javascript.jsx,css,scss,html autocmd BufWritePre <buffer> :%s/\s\+$//e
 autocmd FileType ruby,css,scss,html autocmd BufWritePre <buffer> :%s/\s\+$//e
 autocmd BufRead,BufNewFile .eslintrc,.jscsrc,.jshintrc,.babelrc,.tern-project set ft=json
 
 " json
 let g:vim_json_syntax_conceal = 0
 
+" deoplete
 let g:deoplete#enable_smart_case = 1
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#file#enable_buffer_path = 1
 let g:deoplete#omni#input_patterns = {}
+
+" echodoc
+set cmdheight=2
+let g:echodoc#enable_at_startup = 1
 
 if has('persistent_undo')
   set undofile
@@ -239,38 +226,10 @@ au FileType go command! -bang A call go#alternate#Switch(<bang>0, '')
 au FileType go command! -bang AV call go#alternate#Switch(0, "vsplit")
 au FileType go command! -bang AS call go#alternate#Switch(0, "split")
 au FileType go set colorcolumn=80
-au FileType javascript set tabstop=4 shiftwidth=4
 
 " EasyAlign
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
-
-" Rubocop
-let g:vimrubocop_keymap = 0
-nmap <Leader>ra :RuboCop -a<cr>
-
-" ==================================================
-" Spell check configuration
-" ==================================================
-let g:myLangList=["nospell","es_es","en_us"]
-function! ToggleSpell()
-  if !exists( "b:myLang" )
-    if &spell
-      let b:myLang=index(g:myLangList, &spelllang)
-    else
-      let b:myLang=0
-    endif
-  endif
-  let b:myLang=b:myLang+1
-  if b:myLang>=len(g:myLangList) | let b:myLang=0 | endif
-  if b:myLang==0
-    setlocal nospell
-  else
-    execute "setlocal spell spelllang=".get(g:myLangList, b:myLang)
-  endif
-  echo "spell checking language:" g:myLangList[b:myLang]
-endfunction
-nmap <silent> <F7> :call ToggleSpell()<CR>
 
 set statusline=""
 set statusline+=%{exists('g:loaded_fugitive')?fugitive#statusline():''}
@@ -278,13 +237,12 @@ set statusline+=%{exists('g:loaded_fugitive')?'\ ':''}
 set statusline+=%f\ [ASCII=\%03.3b]
 set statusline+=[COL=\%c]
 
+" Open file on last position
 if has("autocmd")
   au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
 au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
-
-" let g:nvim_typescript#max_completion_detail=100
 
 " FZF
 " Insert mode completion
@@ -296,29 +254,31 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 " Prettier
 " Prettier configuration
 let g:prettier#autoformat = 1
-
 let g:prettier#exec_cmd_async = 1
-
-" max line lengh that prettier will wrap on
 let g:prettier#config#print_width = 80
-
-" number of spaces per indentation level
 let g:prettier#config#tab_width = 4
-
-" use tabs over spaces
 let g:prettier#config#use_tabs = 'false'
-
-" print semicolons
 let g:prettier#config#semi = 'true'
-
-" single quotes over double quotes
-let g:prettier#config#single_quote = 'true' 
-
-" print spaces between brackets
-let g:prettier#config#bracket_spacing = 'true' 
-
-" put > on the last line instead of new line
-let g:prettier#config#jsx_bracket_same_line = 'false' 
-
-" none|es5|all
+let g:prettier#config#single_quote = 'true'
+let g:prettier#config#bracket_spacing = 'true'
+let g:prettier#config#jsx_bracket_same_line = 'false'
 let g:prettier#config#trailing_comma = 'es5'
+
+" nord
+let g:nord_italic = 1
+let g:nord_italic_comments = 1
+
+" Javascript
+au FileType javascript set tabstop=4 shiftwidth=4
+
+" " Typescript
+" autocmd FileType typescript,typescriptreact setl omnifunc=TSOmnicFunc
+" " let g:neomake_typescript_enabled_makers = []
+" let g:nvim_typescript#max_completion_detail=50
+" let g:nvim_typescript#completion_mark=''
+" let g:nvim_typescript#javascript_support=1
+" " let g:nvim_typescript#diagnosticsEnable=1
+" map <silent> <leader>gd :TSDoc <cr>
+" map <silent> <leader>gt :TSType <cr>
+" map <silent> <leader>gtd :TSTypeDef <cr>
+" map <silent> <leader>ti :TSImport <cr>

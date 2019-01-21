@@ -20,15 +20,15 @@ $0
 endsnippet
 
 snippet cl "console.log" b
-console.log($0); // eslint-disable-line no-console
+console.log($0);
 endsnippet
 
 snippet ff "console.info('var', var)" b
-console.info('$1', ${1:var}); // eslint-disable-line no-console
+console.info('$1', ${1:var});
 endsnippet
 
-snippet debug "debugger //eslint-disable-line no-debugger" b
-debugger // eslint-disable-line no-debugger
+snippet debug "debugger;" b
+debugger;
 endsnippet
 
 snippet for "for()" b
@@ -98,4 +98,53 @@ snippet sc "export const Component = styled.tag``" b
 export const ${1:Component} = styled.${2:div}\`
 $0
 \`;
+endsnippet
+
+snippet impprop "import PropTypes from 'prop-types'" b
+import PropTypes from 'prop-types';
+endsnippet
+
+snippet ac "export const actionCreator = ({ type: '' })" b
+export const $1 = ($2) => ({
+	type: $3
+});
+endsnippet
+
+snippet ce "export const fooEpic = (action$, store)" b
+export const $1Epic = (action$, store) =>
+	action$
+		.ofType($2)
+		.$3
+endsnippet
+
+snippet po "foo: PropTypes.object," b
+$1: PropTypes.object,
+endsnippet
+
+snippet por "foo: PropTypes.object.isRequired," b
+$1: PropTypes.object.isRequired,
+endsnippet
+
+snippet ps "foo: PropTypes.string," b
+$1: PropTypes.string,
+endsnippet
+
+snippet psr "foo: PropTypes.string.isRequired," b
+$1: PropTypes.string.isRequired,
+endsnippet
+
+snippet pf "foo: PropTypes.func," b
+$1: PropTypes.func,
+endsnippet
+
+snippet pfr "foo: PropTypes.func.isRequired," b
+$1: PropTypes.func.isRequired,
+endsnippet
+
+snippet pb "foo: PropTypes.bool," b
+$1: PropTypes.bool,
+endsnippet
+
+snippet pbr "foo: PropTypes.bool.isRequired," b
+$1: PropTypes.bool.isRequired,
 endsnippet
